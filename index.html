@@ -79,12 +79,12 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="#products" class="btn-magnetic">
-          Order Now
+        <button id="navBookingBtn" class="btn-magnetic" style="cursor: pointer; border: none; font-family: inherit;">
+          Booking Now
           <span class="btn-icon-circle">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
-        </a>
+        </button>
 
         <button class="mobile-toggle" aria-label="Toggle navigation menu">
           <span class="hamburger-line"></span>
@@ -445,9 +445,142 @@
   </div>
 
   <!-- ========================================================================
-       FLOATING WHATSAPP BUTTON (DIRECT ORDER & INQUIRY)
+       TABLE & COFFEE LOUNGE RESERVATION MODAL (BOOKING NOW)
        ======================================================================== -->
-  <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener" class="whatsapp-floating-btn" aria-label="Chat on WhatsApp">
+  <div class="booking-modal-overlay" id="bookingModal">
+    <div class="booking-modal-card">
+      <div class="booking-modal-header">
+        <button class="booking-modal-close" id="closeBookingBtn" aria-label="Close Reservation">&times;</button>
+        <div class="booking-badge">☕ TABLE & COFFEE LOUNGE RESERVATION</div>
+        <h3>Reserve Your Experience</h3>
+        <p>হোম ডেলিভারি নয় — ক্যাফে লাউঞ্জে সরাসরি আগমন ও স্পেশাল কফি সেশনের জন্য অগ্রিম আসন নিশ্চিত করুন।</p>
+      </div>
+
+      <div class="booking-modal-body">
+        <!-- FORM VIEW -->
+        <form id="tableBookingForm">
+          <div class="booking-selected-item-box" id="bookingSelectedItemBox">
+            <div class="booking-selected-item-info">
+              <span class="item-icon">☕</span>
+              <div>
+                <strong id="bookingItemNameDisplay">Signature Coffee Tasting & Lounge Table</strong>
+                <span id="bookingItemPriceDisplay">অগ্রিম আসন সংরক্ষণ • ফ্রি টেবিল বুকিং</span>
+              </div>
+            </div>
+            <input type="hidden" id="bookingHiddenItemName" value="Signature Coffee Tasting & Lounge Table" />
+            <input type="hidden" id="bookingHiddenPrice" value="0" />
+          </div>
+
+          <div class="booking-form-grid">
+            <div class="booking-form-group">
+              <label for="bookingDateInput">📅 আগমনের তারিখ</label>
+              <input type="date" id="bookingDateInput" required class="booking-input" />
+            </div>
+
+            <div class="booking-form-group">
+              <label for="bookingTimeSelect">⏰ আগমনের সময় (স্লট)</label>
+              <select id="bookingTimeSelect" required class="booking-select">
+                <option value="10:00 AM - 11:30 AM (সকালের ফ্রেশ ব্রিউ)">১০:০০ AM - ১১:৩০ AM (সকাল)</option>
+                <option value="12:00 PM - 01:30 PM (মিড-ডে রিফ্রেশ)">১২:০০ PM - ০১:৩০ PM (দুপুর)</option>
+                <option value="03:30 PM - 05:00 PM (আফটারনুন কফি)">০৩:৩০ PM - ০৫:০০ PM (বিকাল)</option>
+                <option value="05:30 PM - 07:00 PM (সানসেট লাউঞ্জ)" selected>০৫:৩০ PM - ০৭:০০ PM (সন্ধ্যা)</option>
+                <option value="07:30 PM - 09:00 PM (ইভনিং ভাইব)">০৭:৩০ PM - ০৯:০০ PM (রাত)</option>
+                <option value="09:00 PM - 10:30 PM (নাইট রোস্ট সেশন)">০৯:০০ PM - ১০:৩০ PM (লেট নাইট)</option>
+              </select>
+            </div>
+
+            <div class="booking-form-group">
+              <label for="bookingGuestsSelect">👥 কতজন আসবেন (গেস্ট)</label>
+              <select id="bookingGuestsSelect" required class="booking-select">
+                <option value="১ জন (Solo Chill / Work)">১ জন (সোলো ওয়ার্ক / রিডিং)</option>
+                <option value="২ জন (Duo / Couple Table)" selected>২ জন (কাপল / ডুও টেবিল)</option>
+                <option value="৩ - ৪ জন (Small Group / Friends)">৩ - ৪ জন (ফ্রেন্ডস ও ফ্যামিলি)</option>
+                <option value="৫ - ৮ জন (Lounge Meeting & Chat)">৫ - ৮ জন (লাউঞ্জ মিটিং ও আড্ডা)</option>
+                <option value="৮+ জন (VIP Executive Suite)">৮+ জন (ভিআইপি গ্রুপ লাউঞ্জ)</option>
+              </select>
+            </div>
+
+            <div class="booking-form-group">
+              <label for="bookingZoneSelect">🛋️ আসন এরিয়া পছন্দ</label>
+              <select id="bookingZoneSelect" required class="booking-select">
+                <option value="মেইন এসি লাউঞ্জ (Main AC Lounge)" selected>🛋️ মেইন এসি লাউঞ্জ</option>
+                <option value="রুফটপ ওপেন-এয়ার টেরেস (Terrace Garden)">🌿 রুফটপ ওপেন-এয়ার টেরেস</option>
+                <option value="সাইলেন্ট কোয়াইট কর্নার (Quiet Work Corner)">💻 সাইলেন্ট কোয়াইট কর্নার</option>
+              </select>
+            </div>
+
+            <div class="booking-form-group full-width">
+              <label for="bookingCustomerName">👤 আপনার পুরো নাম</label>
+              <input type="text" id="bookingCustomerName" required placeholder="আপনার নাম লিখুন (যেমন: তানভীর আহমেদ)" class="booking-input" />
+            </div>
+
+            <div class="booking-form-group full-width">
+              <label for="bookingPhoneInput">📱 মোবাইল / হোয়াটসঅ্যাপ নম্বর</label>
+              <input type="tel" id="bookingPhoneInput" required placeholder="018XXXXXXXX" class="booking-input" />
+            </div>
+
+            <div class="booking-form-group full-width">
+              <label for="bookingNotesInput">📝 বিশেষ কোনো অনুরোধ (ঐচ্ছিক)</label>
+              <textarea id="bookingNotesInput" rows="2" placeholder="বার্থডে সারপ্রাইজ, উইন্ডো সাইড সিট, কাজের জন্য পাওয়ার সকেট প্রয়োজন ইত্যাদি..." class="booking-textarea"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-confirm-booking" id="btnSubmitBooking">
+            ✨ বুকিং নিশ্চিত করুন (Confirm Booking)
+          </button>
+
+          <p style="font-size: 11px; color: #6b7280; text-align: center; margin: 12px 0 0 0;">
+            🔒 কোনো অগ্রিম ফি নেই। আপনার বুকিং কনফার্মেশন সাথে সাথে হোয়াটসঅ্যাপে পাঠানো হবে।
+          </p>
+        </form>
+
+        <!-- SUCCESS VIEW (Hidden initially) -->
+        <div class="booking-success-box" id="bookingSuccessBox" style="display: none;">
+          <div class="booking-success-icon">✓</div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.6rem; color: #166534; margin: 0 0 6px 0;">টেবিল বুকিং সম্পন্ন হয়েছে!</h4>
+          <p style="color: #4b5563; font-size: 13px; margin: 0;">আপনার আসন ও কফি সেশন সংরক্ষণ করা হয়েছে। আপনার রেফারেন্স নিচে দেওয়া হলো:</p>
+
+          <div class="booking-summary-card">
+            <div class="booking-summary-row">
+              <span>বুকিং রেফারেন্স আইডি</span>
+              <strong id="resSummaryId" style="color: #d97706; font-family: monospace; font-size: 15px;">#BK-0000</strong>
+            </div>
+            <div class="booking-summary-row">
+              <span>গ্রাহকের নাম</span>
+              <strong id="resSummaryName">-</strong>
+            </div>
+            <div class="booking-summary-row">
+              <span>নির্বাচিত কফি / আইটেম</span>
+              <strong id="resSummaryItem">-</strong>
+            </div>
+            <div class="booking-summary-row">
+              <span>আগমনের তারিখ ও সময়</span>
+              <strong id="resSummaryDateTime">-</strong>
+            </div>
+            <div class="booking-summary-row">
+              <span>অতিথির সংখ্যা ও স্থান</span>
+              <strong id="resSummaryGuestsZone">-</strong>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="#" id="btnWhatsAppConfirmLink" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #16a34a; color: #ffffff; padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 8px 20px -4px rgba(22, 163, 74, 0.4);">
+              💬 হোয়াটসঅ্যাপে ইনস্ট্যান্ট কনফার্মেশন পাঠান
+            </a>
+            <button type="button" id="btnDoneBooking" class="btn-magnetic btn-outline" style="justify-content: center; padding: 10px; border-radius: 10px; width: 100%;">
+              সম্পন্ন (Done)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING WHATSAPP BUTTON (TABLE RESERVATION & INQUIRY)
+       ======================================================================== -->
+  <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!%20I%20would%20like%20to%20reserve%20a%20table%20at%20your%20lounge." target="_blank" rel="noopener" class="whatsapp-floating-btn" aria-label="Reserve on WhatsApp">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12C2 13.85 2.5 15.58 3.38 17.07L2.05 22L7.09 20.69C8.54 21.52 10.22 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.07 16.5C16.86 17.09 15.93 17.61 15.24 17.75C14.77 17.84 14.16 17.91 12.09 17.05C9.44 15.95 7.74 13.25 7.61 13.07C7.48 12.9 6.55 11.66 6.55 10.38C6.55 9.1 7.21 8.47 7.44 8.23C7.67 7.99 7.94 7.94 8.14 7.94C8.34 7.94 8.54 7.94 8.71 7.95C8.89 7.96 9.14 7.88 9.38 8.47C9.63 9.07 10.23 10.55 10.3 10.7C10.37 10.85 10.42 11.02 10.32 11.22C10.22 11.42 10.15 11.51 10 11.69C9.85 11.87 9.69 12.08 9.56 12.23C9.41 12.4 9.25 12.58 9.42 12.87C9.59 13.16 10.18 14.12 11.04 14.89C12.16 15.89 13.08 16.21 13.37 16.35C13.66 16.49 13.83 16.46 14.01 16.26C14.19 16.06 14.77 15.38 14.99 15.08C15.21 14.78 15.43 14.83 15.71 14.93C15.99 15.03 17.49 15.77 17.8 15.92C18.11 16.07 18.31 16.14 18.38 16.27C18.45 16.4 18.45 17.01 18.24 17.6L17.07 16.5Z" fill="currentColor"/></svg>
     <span>WhatsApp</span>
   </a>

@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initDynamicProducts();
+  initTableBookingModal();
   initLightbox();
   initGalleryLightbox();
   initNewsletter();
@@ -80,7 +81,7 @@ function initDynamicProducts() {
         <div class="card-bottom">
           <div class="product-price">৳${Number(prod.price).toLocaleString()}</div>
           <button class="btn-magnetic btn-order-quick" data-id="${escapeHTML(prod.id)}" data-name="${escapeHTML(prod.name)}" data-price="${prod.price}">
-            Order Now
+            Booking Now
             <span class="btn-icon-circle">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -89,13 +90,13 @@ function initDynamicProducts() {
       </div>
     `).join('');
 
-    // Attach order click listeners
+    // Attach booking click listeners
     document.querySelectorAll('.btn-order-quick').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = btn.getAttribute('data-id');
         const name = btn.getAttribute('data-name');
         const price = parseFloat(btn.getAttribute('data-price'));
-        handleQuickOrder(id, name, price);
+        openBookingModal(name, price);
       });
     });
   }
@@ -120,16 +121,155 @@ function initDynamicProducts() {
   });
 }
 
-// --- Quick Order Action ---
-function handleQuickOrder(id, name, price) {
-  if (window.brewlabStore) {
-    const newOrder = window.brewlabStore.createOrder({
-      customerName: 'Online Guest',
-      email: 'guest@brewlab.local',
-      item: `${name} x 1`,
-      total: price
+// --- Global Open Booking Modal Helper ---
+function openBookingModal(itemName, itemPrice) {
+  const modal = document.getElementById('bookingModal');
+  const form = document.getElementById('tableBookingForm');
+  const successBox = document.getElementById('bookingSuccessBox');
+  const nameDisplay = document.getElementById('bookingItemNameDisplay');
+  const priceDisplay = document.getElementById('bookingItemPriceDisplay');
+  const hiddenName = document.getElementById('bookingHiddenItemName');
+  const hiddenPrice = document.getElementById('bookingHiddenPrice');
+  const dateInput = document.getElementById('bookingDateInput');
+
+  if (!modal) return;
+
+  // Reset views
+  if (form) form.style.display = 'block';
+  if (successBox) successBox.style.display = 'none';
+
+  // Set date input min and default to today
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    if (!dateInput.value) dateInput.value = today;
+  }
+
+  // Populate selected item info
+  const selectedName = itemName || 'Signature Coffee Tasting & Lounge Table';
+  const selectedPrice = itemPrice ? Number(itemPrice) : 0;
+
+  if (nameDisplay) nameDisplay.textContent = selectedName;
+  if (priceDisplay) {
+    priceDisplay.textContent = selectedPrice > 0 ? `মূল্য: ৳${selectedPrice.toLocaleString()} • আসন সংরক্ষণ ফ্রি` : 'আসন সংরক্ষণ • ফ্রি টেবিল বুকিং';
+  }
+  if (hiddenName) hiddenName.value = selectedName;
+  if (hiddenPrice) hiddenPrice.value = selectedPrice;
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// --- Table & Coffee Lounge Booking Controller ---
+function initTableBookingModal() {
+  const modal = document.getElementById('bookingModal');
+  const closeBtn = document.getElementById('closeBookingBtn');
+  const doneBtn = document.getElementById('btnDoneBooking');
+  const form = document.getElementById('tableBookingForm');
+  const successBox = document.getElementById('bookingSuccessBox');
+  const navBtn = document.getElementById('navBookingBtn');
+
+  if (navBtn) {
+    navBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openBookingModal('Signature Coffee Tasting & Lounge Table', 0);
     });
-    showToast(`☕ অর্ডার নিশ্চিত হয়েছে! টিকিট: ${newOrder.id} (৳${Number(price).toLocaleString()})`);
+  }
+
+  function closeBooking() {
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeBooking);
+  if (doneBtn) doneBtn.addEventListener('click', closeBooking);
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeBooking();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+      closeBooking();
+    }
+  });
+
+  // Handle Form Submission
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const itemName = document.getElementById('bookingHiddenItemName')?.value || 'Coffee Lounge Table';
+      const itemPrice = parseFloat(document.getElementById('bookingHiddenPrice')?.value || '0');
+      const dateVal = document.getElementById('bookingDateInput')?.value;
+      const timeVal = document.getElementById('bookingTimeSelect')?.value;
+      const guestsVal = document.getElementById('bookingGuestsSelect')?.value;
+      const zoneVal = document.getElementById('bookingZoneSelect')?.value;
+      const rawName = document.getElementById('bookingCustomerName')?.value.trim();
+      const rawPhone = document.getElementById('bookingPhoneInput')?.value.trim();
+      const rawNotes = document.getElementById('bookingNotesInput')?.value.trim();
+
+      if (!rawName || !rawPhone || !dateVal) {
+        showToast('⚠️ অনুগ্রহ করে আপনার নাম, ফোন নম্বর এবং তারিখ প্রদান করুন।');
+        return;
+      }
+
+      const customerName = escapeHTML(rawName);
+      const phone = escapeHTML(rawPhone);
+      const notes = escapeHTML(rawNotes);
+
+      const bookingData = {
+        customerName,
+        phone,
+        item: itemName,
+        total: itemPrice,
+        date: dateVal,
+        timeSlot: timeVal,
+        guests: guestsVal,
+        zone: zoneVal,
+        notes: notes || 'কোনো বিশেষ নোট নেই'
+      };
+
+      let createdBooking = null;
+      if (window.brewlabStore) {
+        createdBooking = window.brewlabStore.createBooking(bookingData);
+      } else {
+        createdBooking = {
+          id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
+          ...bookingData
+        };
+      }
+
+      // Populate Success Summary
+      const summaryId = document.getElementById('resSummaryId');
+      const summaryName = document.getElementById('resSummaryName');
+      const summaryItem = document.getElementById('resSummaryItem');
+      const summaryDateTime = document.getElementById('resSummaryDateTime');
+      const summaryGuestsZone = document.getElementById('resSummaryGuestsZone');
+
+      if (summaryId) summaryId.textContent = '#' + createdBooking.id;
+      if (summaryName) summaryName.textContent = customerName;
+      if (summaryItem) summaryItem.textContent = itemName;
+      if (summaryDateTime) summaryDateTime.textContent = `${dateVal} | ${timeVal}`;
+      if (summaryGuestsZone) summaryGuestsZone.textContent = `${guestsVal} • ${zoneVal}`;
+
+      // Build WhatsApp Pre-filled message link to user's phone +8801884636312
+      const waMsg = `Hello Coffiko! আমি একটি টেবিল বুকিং করেছি।\n\n📌 বুকিং আইডি: #${createdBooking.id}\n👤 নাম: ${rawName}\n📱 ফোন: ${rawPhone}\n☕ কফি/সেশন: ${itemName}\n📅 তারিখ: ${dateVal}\n⏰ সময়: ${timeVal}\n👥 অতিথি: ${guestsVal}\n🛋️ আসন: ${zoneVal}\n📝 বিশেষ অনুরোধ: ${rawNotes || 'নেই'}\n\nঅনুগ্রহ করে আমার বুকিং কনফার্ম করবেন। ধন্যবাদ!`;
+      const waLink = `https://wa.me/8801884636312?text=${encodeURIComponent(waMsg)}`;
+      const waBtn = document.getElementById('btnWhatsAppConfirmLink');
+      if (waBtn) waBtn.href = waLink;
+
+      // Switch views
+      form.style.display = 'none';
+      if (successBox) successBox.style.display = 'block';
+
+      showToast(`🎉 টেবিল বুকিং সম্পন্ন হয়েছে! আইডি: #${createdBooking.id}`);
+      form.reset();
+    });
   }
 }
 

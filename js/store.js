@@ -77,22 +77,49 @@ class BrewlabStore {
     if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
       localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([
         {
-          id: 'ORD-1092',
+          id: 'BK-1082',
           customerName: 'Shakil Ahmed',
-          email: 'shakil@example.com',
+          phone: '+8801884636312',
           item: 'Iced Hazelnut Latte x 2',
+          guests: '২ জন (Couple Table)',
+          date: '2026-11-04',
+          timeSlot: '০৫:৩০ PM - ০৭:০০ PM (সন্ধ্যা)',
+          zone: '🛋️ মেইন এসি লাউঞ্জ',
+          notes: 'উইন্ডো সাইড টেবিল পছন্দ',
           total: 760,
-          status: 'Ready',
+          status: 'Confirmed',
+          type: 'Reservation',
           time: new Date(Date.now() - 1000 * 60 * 25).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         },
         {
-          id: 'ORD-1093',
+          id: 'BK-1083',
           customerName: 'Md mahamud',
-          email: 'mahamud@example.com',
+          phone: '+8801712345678',
           item: 'Cold Brew Delight x 1',
+          guests: '১ জন (Solo Chill)',
+          date: '2026-11-04',
+          timeSlot: '০৩:৩০ PM - ০৫:০০ PM (বিকাল)',
+          zone: '💻 সাইলেন্ট কোয়াইট কর্নার',
+          notes: 'ল্যাপটপে কাজের জন্য প্লাগ পয়েন্ট প্রয়োজন',
           total: 350,
-          status: 'Brewing',
+          status: 'Pending',
+          type: 'Reservation',
           time: new Date(Date.now() - 1000 * 60 * 10).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        },
+        {
+          id: 'BK-1084',
+          customerName: 'Md Emran',
+          phone: '+8801912987654',
+          item: 'Mocha Fusion Roast & Tasting Session',
+          guests: '৪ জন (Friends & Family)',
+          date: '2026-11-04',
+          timeSlot: '০৭:৩০ PM - ০৯:০০ PM (রাত)',
+          zone: '🌿 রুফটপ ওপেন-এয়ার টেরেস',
+          notes: 'ফ্রেন্ডস গ্যাদারিং ও কফি আড্ডা',
+          total: 880,
+          status: 'Confirmed',
+          type: 'Reservation',
+          time: new Date(Date.now() - 1000 * 60 * 45).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]));
     }
@@ -130,23 +157,29 @@ class BrewlabStore {
     window.dispatchEvent(new CustomEvent('brewlab:products-updated', { detail: products }));
   }
 
-  // --- Orders Management ---
+  // --- Orders & Table Reservations Management ---
   getOrders() {
     return JSON.parse(localStorage.getItem(STORAGE_KEYS.ORDERS) || '[]');
   }
 
-  createOrder(orderData) {
+  createBooking(bookingData) {
     const orders = this.getOrders();
-    const newOrder = {
-      id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
+    const newBooking = {
+      id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      status: 'Brewing',
-      ...orderData
+      status: 'Confirmed',
+      type: 'Reservation',
+      createdAt: new Date().toISOString(),
+      ...bookingData
     };
-    orders.unshift(newOrder);
+    orders.unshift(newBooking);
     localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
-    window.dispatchEvent(new CustomEvent('brewlab:order-created', { detail: newOrder }));
-    return newOrder;
+    window.dispatchEvent(new CustomEvent('brewlab:order-created', { detail: newBooking }));
+    return newBooking;
+  }
+
+  createOrder(orderData) {
+    return this.createBooking(orderData);
   }
 
   updateOrderStatus(orderId, newStatus) {

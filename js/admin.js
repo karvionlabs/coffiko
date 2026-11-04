@@ -358,22 +358,59 @@ function renderOrdersTable(orders) {
   const tbody = document.getElementById('ordersTableBody');
   if (!tbody) return;
 
-  tbody.innerHTML = orders.map(o => `
-    <tr>
-      <td><strong>${escapeHTML(o.id)}</strong></td>
-      <td>${escapeHTML(o.customerName)}</td>
-      <td>${escapeHTML(o.item)}</td>
-      <td><strong>৳${Number(o.total).toLocaleString()}</strong></td>
-      <td>
-        <select onchange="updateOrderStatus('${escapeHTML(o.id)}', this.value)" style="padding: 4px 8px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 13px;">
-          <option value="Brewing" ${o.status === 'Brewing' ? 'selected' : ''}>Brewing</option>
-          <option value="Ready" ${o.status === 'Ready' ? 'selected' : ''}>Ready</option>
-          <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>Completed</option>
-        </select>
-      </td>
-      <td>${escapeHTML(o.time || 'Recent')}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = orders.map(o => {
+    const rawPhone = o.phone || '';
+    const cleanDigits = rawPhone.replace(/\D/g, '');
+    let fullWaNumber = '';
+    if (cleanDigits.startsWith('880')) {
+      fullWaNumber = cleanDigits;
+    } else if (cleanDigits.startsWith('0')) {
+      fullWaNumber = '880' + cleanDigits.substring(1);
+    } else if (cleanDigits) {
+      fullWaNumber = '880' + cleanDigits;
+    }
+    const waChatLink = fullWaNumber ? `https://wa.me/${fullWaNumber}?text=${encodeURIComponent(`হ্যালো ${o.customerName}! Coffiko থেকে আপনার রিজার্ভেশন (#${o.id}) সংক্রান্ত যোগাযোগ করছি।`)}` : '#';
+
+    return `
+      <tr>
+        <td>
+          <strong style="color: #d97706; font-family: monospace; font-size: 13px;">#${escapeHTML(o.id)}</strong>
+        </td>
+        <td>
+          <strong>${escapeHTML(o.customerName)}</strong><br>
+          <span style="font-size: 12px; color: #6b7280; font-family: monospace;">${escapeHTML(o.phone || 'Phone N/A')}</span>
+        </td>
+        <td>
+          <strong>${escapeHTML(o.item)}</strong><br>
+          <span style="font-size: 12px; color: #15803d; font-weight: 600;">৳${Number(o.total || 0).toLocaleString()}</span>
+        </td>
+        <td>
+          <strong>${escapeHTML(o.date || 'Today')}</strong><br>
+          <span style="font-size: 12px; color: #6b7280;">${escapeHTML(o.timeSlot || o.time || 'Recent')}</span>
+        </td>
+        <td>
+          <span class="status-badge" style="background: #f1f5f9; color: #334155; margin-bottom: 4px; display: inline-block;">${escapeHTML(o.guests || '2 Guests')}</span><br>
+          <span style="font-size: 12px; color: #475569;">${escapeHTML(o.zone || 'Main Lounge')}</span>
+        </td>
+        <td>
+          <select onchange="updateOrderStatus('${escapeHTML(o.id)}', this.value)" style="padding: 5px 8px; border-radius: 6px; border: 1.5px solid #d1d5db; font-size: 12px; font-weight: 600; background: #ffffff; cursor: pointer;">
+            <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+            <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+            <option value="Seated" ${o.status === 'Seated' ? 'selected' : ''}>Seated</option>
+            <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>Completed</option>
+            <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+          </select>
+        </td>
+        <td>
+          ${fullWaNumber ? `
+            <a href="${waChatLink}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: #dcfce7; color: #15803d; border: 1px solid #86efac; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; text-decoration: none;">
+              <span>💬</span> চ্যাট
+            </a>
+          ` : '<span style="color: #9ca3af; font-size: 12px;">N/A</span>'}
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function renderLeadsTable(leads) {
