@@ -107,7 +107,7 @@ function renderDashboard() {
   if (statOrders) statOrders.textContent = orders.filter(o => o.status !== 'Completed').length;
   if (statRevenue) {
     const rev = orders.reduce((sum, o) => sum + (o.total || 0), 0);
-    statRevenue.textContent = '$' + rev.toFixed(2);
+    statRevenue.textContent = '৳' + rev.toLocaleString();
   }
   if (statLeads) statLeads.textContent = leads.length;
 
@@ -136,7 +136,7 @@ function renderProductsTable(products) {
           </div>
         </div>
       </td>
-      <td><strong>$${Number(p.price).toFixed(2)}</strong></td>
+      <td><strong>৳${Number(p.price).toLocaleString()}</strong></td>
       <td><span class="status-badge status-ready">${p.badge || 'Standard'}</span></td>
       <td>
         <button onclick="editProduct('${p.id}')" style="background: none; border: none; cursor: pointer; color: #2563eb; font-weight: 600; margin-right: 8px;">Edit</button>
@@ -155,7 +155,7 @@ function renderOrdersTable(orders) {
       <td><strong>${o.id}</strong></td>
       <td>${o.customerName}</td>
       <td>${o.item}</td>
-      <td><strong>$${Number(o.total).toFixed(2)}</strong></td>
+      <td><strong>৳${Number(o.total).toLocaleString()}</strong></td>
       <td>
         <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding: 4px 8px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 13px;">
           <option value="Brewing" ${o.status === 'Brewing' ? 'selected' : ''}>Brewing</option>

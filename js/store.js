@@ -4,10 +4,10 @@
  */
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'brewlab_products_v1',
-  ORDERS: 'brewlab_orders_v1',
-  LEADS: 'brewlab_leads_v1',
-  SETTINGS: 'brewlab_settings_v1'
+  PRODUCTS: 'coffiko_products_bdt_v2',
+  ORDERS: 'coffiko_orders_bdt_v2',
+  LEADS: 'coffiko_leads_bdt_v2',
+  SETTINGS: 'coffiko_settings_bdt_v2'
 };
 
 const DEFAULT_PRODUCTS = [
@@ -15,9 +15,9 @@ const DEFAULT_PRODUCTS = [
     id: 'prod-1',
     name: 'Iced Hazelnut Latte',
     category: 'cold-brew',
-    price: 6.50,
+    price: 380,
     badge: 'Popular',
-    notes: 'Artisanal hazelnut syrup, double ristretto, organic oat milk over hand-cut ice.',
+    notes: 'প্রিমিয়াম হ্যাজেলনাট সিরাপ, ডাবল রিস্ট্রেত্তো এস্প্রেসো এবং হিমশীতল ফ্রেশ মিল্ক।',
     image: 'assets/images/product-roast-1.avif',
     inStock: true
   },
@@ -25,9 +25,9 @@ const DEFAULT_PRODUCTS = [
     id: 'prod-2',
     name: 'Cold Brew Delight',
     category: 'cold-brew',
-    price: 5.75,
+    price: 350,
     badge: 'Best Seller',
-    notes: '24-hour slow steep Ethiopian single-origin with bright floral and citrus notes.',
+    notes: '২৪ ঘণ্টার স্লো-ড্রিপ ইথিওপিয়ান সিঙ্গেল-অরিজিন ডার্ক রোস্টেড কোল্ড কফি।',
     image: 'assets/images/product-roast-2.avif',
     inStock: true
   },
@@ -35,9 +35,9 @@ const DEFAULT_PRODUCTS = [
     id: 'prod-3',
     name: 'Mocha Fusion Roast',
     category: 'dark-roast',
-    price: 7.20,
+    price: 440,
     badge: 'Signature',
-    notes: 'Velvety dark chocolate ganache blended with dark roasted Colombian espresso.',
+    notes: 'ভ্যালভেটি ডার্ক চকলেট ও তাজা কলম্বিয়ান কফি বিনের ব্লেন্ডেড স্বাদে ভরপুর।',
     image: 'assets/images/product-roast-3.avif',
     inStock: true
   },
@@ -45,9 +45,9 @@ const DEFAULT_PRODUCTS = [
     id: 'prod-4',
     name: 'Single Origin Organic Beans',
     category: 'organic',
-    price: 18.00,
+    price: 1150,
     badge: 'Artisan',
-    notes: '340g whole beans roasted in small batches in Cleveland roastery.',
+    notes: '২৫০ গ্রাম প্রিমিয়াম অ্যারাবিকা হোল কফি বিন্স, হোম ব্রিউইং-এর জন্য সেরা পছন্দ।',
     image: 'assets/images/about-coffee-craft.avif',
     inStock: true
   }
@@ -55,9 +55,11 @@ const DEFAULT_PRODUCTS = [
 
 const DEFAULT_SETTINGS = {
   shopName: 'Coffiko Cafe & Roastery',
-  tagline: "Cleveland's premier artisan coffee lab",
+  tagline: "Premier artisan coffee & specialty roastery",
   announcement: '☕ Fresh small-batch roast every Tuesday & Friday!',
-  contactEmail: 'hello@orbix.studio'
+  contactEmail: 'hellokarvionlabs@gmail.com',
+  whatsapp: '+8801884636312',
+  linkedin: 'https://linkedin.com/in/abdullah-karif-shahjada-'
 };
 
 class BrewlabStore {
@@ -76,19 +78,19 @@ class BrewlabStore {
       localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([
         {
           id: 'ORD-1092',
-          customerName: 'Sarah Jenkins',
-          email: 'sarah.j@example.com',
+          customerName: 'Shakil Ahmed',
+          email: 'shakil@example.com',
           item: 'Iced Hazelnut Latte x 2',
-          total: 13.00,
+          total: 760,
           status: 'Ready',
           time: new Date(Date.now() - 1000 * 60 * 25).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         },
         {
           id: 'ORD-1093',
-          customerName: 'Marcus Vance',
-          email: 'marcus@example.com',
+          customerName: 'Md mahamud',
+          email: 'mahamud@example.com',
           item: 'Cold Brew Delight x 1',
-          total: 5.75,
+          total: 350,
           status: 'Brewing',
           time: new Date(Date.now() - 1000 * 60 * 10).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }

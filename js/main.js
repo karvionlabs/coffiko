@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initDynamicProducts();
   initLightbox();
+  initGalleryLightbox();
   initNewsletter();
   initToast();
 });
@@ -65,7 +66,7 @@ function initDynamicProducts() {
           <p class="product-notes">${prod.notes}</p>
         </div>
         <div class="card-bottom">
-          <div class="product-price">$${Number(prod.price).toFixed(2)}</div>
+          <div class="product-price">৳${Number(prod.price).toLocaleString()}</div>
           <button class="btn-magnetic btn-order-quick" data-id="${prod.id}" data-name="${prod.name}" data-price="${prod.price}">
             Order Now
             <span class="btn-icon-circle">
@@ -116,7 +117,7 @@ function handleQuickOrder(id, name, price) {
       item: `${name} x 1`,
       total: price
     });
-    showToast(`☕ Order Placed! Ticket: ${newOrder.id} ($${price.toFixed(2)})`);
+    showToast(`☕ অর্ডার নিশ্চিত হয়েছে! টিকিট: ${newOrder.id} (৳${Number(price).toLocaleString()})`);
   }
 }
 
@@ -151,6 +152,42 @@ function initLightbox() {
   });
 }
 
+// --- In-Page Gallery Lightbox (Zero External Redirects) ---
+function initGalleryLightbox() {
+  const modal = document.getElementById('imageLightbox');
+  const previewImg = document.getElementById('lightboxImg');
+  const caption = document.getElementById('lightboxCaption');
+  const closeBtn = document.getElementById('closeImageBtn');
+  const cards = document.querySelectorAll('.gallery-card');
+
+  if (!modal || !previewImg) return;
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const imgSrc = card.getAttribute('data-img') || card.querySelector('img')?.src;
+      const capText = card.getAttribute('data-caption') || card.querySelector('img')?.alt || 'Coffiko Artisan Moments';
+      
+      previewImg.src = imgSrc;
+      if (caption) caption.textContent = capText;
+      modal.classList.add('active');
+    });
+  });
+
+  function closeGalleryModal() {
+    modal.classList.remove('active');
+    if (previewImg) previewImg.src = '';
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeGalleryModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeGalleryModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeGalleryModal();
+  });
+}
+
 // --- Newsletter Subscription ---
 function initNewsletter() {
   const form = document.getElementById('newsletterForm');
@@ -162,7 +199,7 @@ function initNewsletter() {
     const email = input ? input.value.trim() : '';
     if (email && window.brewlabStore) {
       window.brewlabStore.addLead(email);
-      showToast('🎉 Welcome to BrewLab VIP Club! Check your inbox.');
+      showToast('🎉 Welcome to Coffiko VIP Club! Check your inbox.');
       form.reset();
     }
   });
