@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffiko – Design System & Style Guide</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .sg-section {
+      padding-block: 48px;
+      border-bottom: 1px solid var(--brand-border);
+    }
+    .sg-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .sg-color-card {
+      border-radius: var(--radius-16);
+      overflow: hidden;
+      border: 1px solid var(--brand-border);
+      background: var(--brand-white);
+    }
+    .sg-color-swatch {
+      height: 100px;
+      width: 100%;
+    }
+    .sg-color-meta {
+      padding: 12px 16px;
+      font-size: var(--font-size-small);
+    }
+    .sg-color-name {
+      font-weight: 700;
+      color: var(--brand-primary);
+    }
+    .sg-color-hex {
+      color: var(--gray-500);
+      font-family: monospace;
+    }
+    .sg-type-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-block: 16px;
+      border-bottom: 1px dashed var(--brand-border);
+      gap: 24px;
+    }
+    .sg-meta {
+      font-size: 13px;
+      color: var(--gray-500);
+      flex-shrink: 0;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/icons/coffiko-nav-logo.png" alt="Coffiko Logo" />
+      </a>
+      <div>
+        <a href="index.html" class="btn-magnetic btn-outline" style="padding: 10px 20px;">← Back to Website</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 48px; padding-bottom: 96px;">
+    <div style="margin-bottom: 40px;">
+      <span class="section-subtitle">Foundations & Components</span>
+      <h1 style="font-size: 3.5rem;">Coffiko Style Guide</h1>
+      <p class="text-muted">Single Source of Truth for Design Tokens, Typography, UI Components and Micro-interactions.</p>
+    </div>
+
+    <!-- 1. COLOR TOKENS -->
+    <section class="sg-section">
+      <h2>01. Color Palette</h2>
+      <div class="sg-color-grid">
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--brand-primary);"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Brand Primary</div>
+            <div class="sg-color-hex">#482820</div>
+          </div>
+        </div>
+
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--brand-secondary);"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Brand Secondary</div>
+            <div class="sg-color-hex">#FEBD02</div>
+          </div>
+        </div>
+
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--brand-background); border-bottom: 1px solid #ddd;"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Canvas Background</div>
+            <div class="sg-color-hex">#F8F5F1</div>
+          </div>
+        </div>
+
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--brand-accent);"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Flame Accent</div>
+            <div class="sg-color-hex">#F85119</div>
+          </div>
+        </div>
+
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--gray-900);"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Charcoal Text</div>
+            <div class="sg-color-hex">#111827</div>
+          </div>
+        </div>
+
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background-color: var(--brand-white); border-bottom: 1px solid #ddd;"></div>
+          <div class="sg-color-meta">
+            <div class="sg-color-name">Card White</div>
+            <div class="sg-color-hex">#FFFFFF</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TYPOGRAPHY -->
+    <section class="sg-section">
+      <h2>02. Typography Scale</h2>
+
+      <div class="sg-type-row">
+        <h1 style="font-size: 5rem; margin: 0;">Heading 01</h1>
+        <span class="sg-meta">Tanker / 120px+ (clamp) / 88%</span>
+      </div>
+
+      <div class="sg-type-row">
+        <h2 style="font-size: 3.5rem; margin: 0;">Heading 02</h2>
+        <span class="sg-meta">Tanker / 68px / 100%</span>
+      </div>
+
+      <div class="sg-type-row">
+        <h3 style="font-size: 2.5rem; margin: 0;">Heading 03</h3>
+        <span class="sg-meta">Tanker / 48px / 110%</span>
+      </div>
+
+      <div class="sg-type-row">
+        <h4 style="font-size: 2rem; margin: 0;">Heading 04</h4>
+        <span class="sg-meta">Tanker / 36px / 110%</span>
+      </div>
+
+      <div class="sg-type-row">
+        <div style="font-family: var(--font-special); font-size: 3rem; color: var(--brand-accent);">Handwritten Cursive Script</div>
+        <span class="sg-meta">Smooch / 48px Regular</span>
+      </div>
+
+      <div class="sg-type-row">
+        <div style="font-size: 1.125rem; font-weight: 500;">Body Large: Balanced acidity, rich crema and artisan notes.</div>
+        <span class="sg-meta">Interdisplay / 18px / 140%</span>
+      </div>
+
+      <div class="sg-type-row">
+        <div>Body Regular: Single-origin Ethiopian and Colombian beans roasted in small batches.</div>
+        <span class="sg-meta">Interdisplay / 16px / 150%</span>
+      </div>
+    </section>
+
+    <!-- 3. BUTTONS & UI CONTROLS -->
+    <section class="sg-section">
+      <h2>03. Buttons & Interactive Controls</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 24px;">
+        <a href="#" class="btn-magnetic">
+          Primary Magnetic Button
+          <span class="btn-icon-circle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="#" class="btn-magnetic btn-secondary">
+          Secondary Golden Button
+          <span class="btn-icon-circle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="#" class="btn-magnetic btn-outline">
+          Outline Ghost Button
+        </a>
+
+        <span class="hero-badge" style="margin: 0;">
+          Badge Element
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="text-align: center;">
+      <p>&copy; 2026 Coffiko Roastery • Design System Documentation</p>
+    </div>
+  </footer>
+</body>
+</html>

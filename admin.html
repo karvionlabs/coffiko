@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffiko – Admin Panel & CMS</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ========================================================================
+       SIDEBAR NAVIGATION
+       ======================================================================== -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="assets/icons/coffiko-footer-logo.png" alt="Coffiko Logo" style="height: 42px; width: auto;" />
+    </div>
+
+    <!-- Authenticated Admin Profile -->
+    <div class="admin-user-profile" id="adminUserProfile" style="padding: 10px 14px; background: rgba(255,255,255,0.08); border-radius: 8px; margin-bottom: 20px; font-size: 13px; display: flex; align-items: center; justify-content: space-between;">
+      <div>
+        <span style="opacity: 0.7; font-size: 11px; display: block; text-transform: uppercase; letter-spacing: 0.5px;">User</span>
+        <strong id="loggedUserDisplay" style="color: #facc15; font-family: monospace; font-size: 14px;">coffiko</strong>
+      </div>
+      <button id="btnLogout" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer;">লগআউট</button>
+    </div>
+
+    <nav class="admin-nav">
+      <div class="admin-nav-item active" data-tab="tab-overview">
+        <span>📊</span> Dashboard Overview
+      </div>
+      <div class="admin-nav-item" data-tab="tab-products">
+        <span>☕</span> Menu & Products
+      </div>
+      <div class="admin-nav-item" data-tab="tab-orders">
+        <span>🛒</span> Live Orders
+      </div>
+      <div class="admin-nav-item" data-tab="tab-leads">
+        <span>✉️</span> VIP Leads
+      </div>
+      <div class="admin-nav-item" data-tab="tab-settings">
+        <span>⚙️</span> Store Settings
+      </div>
+    </nav>
+
+    <a href="index.html" class="admin-footer-btn">
+      <span>←</span> Back to Live Website
+    </a>
+  </aside>
+
+  <!-- ========================================================================
+       MAIN DASHBOARD AREA
+       ======================================================================== -->
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1>Coffiko Management Console</h1>
+        <p style="color: #6b7280; font-size: 14px;">Real-time CMS, product catalogue & order tracking</p>
+      </div>
+      <button class="btn-magnetic" id="btnAddProduct" style="padding: 10px 20px; font-size: 13px;">
+        + Add New Coffee
+      </button>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="admin-stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-title">Menu Items</div>
+        <div class="stat-card-val" id="statTotalProducts">4</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-title">Active Orders</div>
+        <div class="stat-card-val" id="statActiveOrders" style="color: var(--brand-accent);">2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-title">Today's Revenue</div>
+        <div class="stat-card-val" id="statRevenue" style="color: #10b981;">$18.75</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-title">VIP Subscribers</div>
+        <div class="stat-card-val" id="statTotalLeads">2</div>
+      </div>
+    </div>
+
+    <!-- TAB 1: OVERVIEW -->
+    <section class="admin-tab-content active" id="tab-overview">
+      <div class="admin-panel-card">
+        <div class="panel-header-actions">
+          <h2>Active Menu Overview</h2>
+          <span style="font-size: 13px; color: #6b7280;">Synced with Local CMS Data Store</span>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Coffee Item</th>
+              <th>Price</th>
+              <th>Badge</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: PRODUCTS -->
+    <section class="admin-tab-content" id="tab-products">
+      <div class="admin-panel-card">
+        <div class="panel-header-actions">
+          <h2>Product Inventory Management</h2>
+          <button class="btn-magnetic" onclick="document.getElementById('btnAddProduct').click()" style="padding: 8px 16px; font-size: 12px;">+ Add Item</button>
+        </div>
+        <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">
+          Changes made here reflect immediately on the public customer homepage without recompilation.
+        </p>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Coffee Item</th>
+              <th>Price</th>
+              <th>Badge</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBodyFull">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: ORDERS -->
+    <section class="admin-tab-content" id="tab-orders">
+      <div class="admin-panel-card">
+        <div class="panel-header-actions">
+          <h2>Live Coffee Orders</h2>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items Ordered</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 4: LEADS -->
+    <section class="admin-tab-content" id="tab-leads">
+      <div class="admin-panel-card">
+        <div class="panel-header-actions">
+          <h2>VIP Community Subscribers</h2>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email Address</th>
+              <th>Subscribed Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 5: SETTINGS -->
+    <section class="admin-tab-content" id="tab-settings">
+      <div class="admin-panel-card" style="max-width: 600px;">
+        <div class="panel-header-actions">
+          <h2>Store Configuration</h2>
+        </div>
+        <form id="settingsForm">
+          <div class="form-group">
+            <label for="shopNameInput">Cafe & Roastery Name</label>
+            <input type="text" id="shopNameInput" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="announcementInput">Hero Announcement Ticker</label>
+            <input type="text" id="announcementInput" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="contactEmailInput">Order Notification Target Email</label>
+            <input type="email" id="contactEmailInput" class="form-control" />
+          </div>
+          <button type="submit" class="btn-magnetic" style="margin-top: 10px;">Save Settings</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       ADD / EDIT PRODUCT MODAL
+       ======================================================================== -->
+  <div class="admin-modal" id="productModal">
+    <div class="modal-dialog">
+      <h3 id="modalTitle" style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">Add New Coffee</h3>
+      <form id="productForm">
+        <input type="hidden" id="modalProductId" />
+        
+        <div class="form-group">
+          <label>Item Name</label>
+          <input type="text" id="prodName" class="form-control" required placeholder="e.g. Vanilla Cold Foam Espresso" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="prodCategory" class="form-control">
+              <option value="cold-brew">Cold Brew</option>
+              <option value="dark-roast">Dark Roast</option>
+              <option value="organic">Organic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price ($ USD)</label>
+            <input type="number" step="0.01" id="prodPrice" class="form-control" required placeholder="6.50" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Badge (Optional)</label>
+          <input type="text" id="prodBadge" class="form-control" placeholder="e.g. Popular, Signature, Limited" />
+        </div>
+
+        <div class="form-group">
+          <label>Tasting Notes & Ingredients</label>
+          <textarea id="prodNotes" class="form-control" rows="3" placeholder="Brief tasting notes..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Image Asset Path</label>
+          <input type="text" id="prodImage" class="form-control" value="assets/images/product-roast-1.avif" />
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" id="btnCancelProduct" class="btn-magnetic btn-outline" style="padding: 10px 20px;">Cancel</button>
+          <button type="submit" class="btn-magnetic" style="padding: 10px 24px;">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ADMIN AUTHENTICATION GATEWAY (USER: coffiko / PIN: 2026)
+       ======================================================================== -->
+  <div id="adminAuthOverlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); z-index: 99999; align-items: center; justify-content: center;">
+    <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 16px; padding: 36px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); text-align: center; border: 1px solid rgba(226, 232, 240, 0.8);">
+      <div style="margin-bottom: 20px;">
+        <img src="assets/icons/favicon.png" alt="Coffiko" style="width: 52px; height: 52px; border-radius: 12px; background: #1c1917; padding: 8px;" />
+      </div>
+      <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #1c1917; margin-bottom: 6px;">Coffiko Admin Console</h2>
+      <p style="color: #64748b; font-size: 13px; margin-bottom: 24px;">Please authenticate to access store management</p>
+
+      <form id="authLoginForm" autocomplete="off">
+        <div style="text-align: left; margin-bottom: 16px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Username</label>
+          <input type="text" id="authUsernameInput" required class="form-control" placeholder="Enter username (e.g. coffiko)" style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-family: monospace;" />
+        </div>
+
+        <div style="text-align: left; margin-bottom: 20px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Security PIN</label>
+          <input type="password" id="authPinInput" required maxlength="10" class="form-control" placeholder="••••" style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 16px; letter-spacing: 3px; font-family: monospace;" />
+        </div>
+
+        <div id="authErrorMsg" style="display: none; padding: 10px 12px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; border-radius: 8px; font-size: 13px; margin-bottom: 16px; font-weight: 500;">
+          ভুল ইউজারনেম বা সিকিউরিটি পিন! সঠিক তথ্য দিন।
+        </div>
+
+        <button type="submit" class="btn-magnetic" style="width: 100%; padding: 12px; font-size: 14px; justify-content: center; background: #1c1917; color: #ffffff; border-radius: 8px; cursor: pointer;">
+          🔓 প্রবেশ করুন (Sign In)
+        </button>
+      </form>
+
+      <div style="margin-top: 20px; font-size: 12px; color: #94a3b8;">
+        Protected by Coffiko Zero-Leak Security & PIN Gateway
+      </div>
+    </div>
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

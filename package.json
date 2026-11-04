@@ -1,0 +1,21 @@
+{
+  "name": "coffiko",
+  "version": "1.0.0",
+  "description": "Coffiko artisan cafe & specialty roastery website with interactive CMS admin and GSAP animations.",
+  "scripts": {
+    "start": "python3 -m http.server 5050",
+    "dev": "python3 -m http.server 5050",
+    "serve": "npx serve -p 5050 ."
+  },
+  "keywords": [
+    "coffee-shop",
+    "webflow",
+    "design-system",
+    "gsap",
+    "scrolltrigger",
+    "cms",
+    "figma"
+  ],
+  "author": "Orbix Studio / Reverse Engineered",
+  "license": "MIT"
+}

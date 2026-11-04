@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffiko – Artisan Coffee & Specialty Roasters</title>
+  <meta name="description" content="Coffiko is a modern artisan cafe and specialty roastery offering ethically sourced small-batch coffee beans and cold brews." />
+  
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:title" content="Coffiko – Cafe & Coffee Roasters" />
+  <meta property="og:description" content="Ethically sourced, hand-picked beans expertly roasted in small batches." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/hero-cup.png" />
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Coffiko",
+    "description": "Artisan coffee shop and specialty roastery offering hand-picked beans and cold brews.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Cleveland"
+    },
+    "image": [
+      "assets/images/hero-cup.png",
+      "assets/images/hero-coffee-splash.avif"
+    ],
+    "hasMenu": {
+      "@type": "Menu",
+      "hasMenuItem": [
+        {
+          "@type": "MenuItem",
+          "name": "Iced Hazelnut Latte",
+          "description": "Artisanal hazelnut syrup, double ristretto, oat milk over ice.",
+          "offers": { "@type": "Offer", "price": "6.50", "priceCurrency": "USD" }
+        },
+        {
+          "@type": "MenuItem",
+          "name": "Cold Brew Delight",
+          "description": "24-hour slow steep single-origin Ethiopian cold brew.",
+          "offers": { "@type": "Offer", "price": "5.75", "priceCurrency": "USD" }
+        }
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOP NAVIGATION HEADER
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="Coffiko Home">
+        <img src="assets/icons/coffiko-nav-logo.png" alt="Coffiko Logo" />
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="#about" class="nav-link">About Us</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#benefits" class="nav-link">Benefits</a>
+        <a href="#testimonials" class="nav-link">Testimonials</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="admin.html" class="nav-link" style="color: var(--brand-accent);">Admin CMS</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#products" class="btn-magnetic">
+          Order Now
+          <span class="btn-icon-circle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <button class="mobile-toggle" aria-label="Toggle navigation menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO SECTION
+       ======================================================================== -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>☕</span> 100% Organic & Ethically Sourced
+        </div>
+        <h1 class="hero-title">
+          Coffee Life's <br /><span class="accent">Beginning</span>
+        </h1>
+        <p class="hero-desc">
+          Cleveland-based specialty coffee house roasting premium hand-picked beans from the finest high-altitude micro-lots around the globe.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#products" class="btn-magnetic">
+            Our Products
+            <span class="btn-icon-circle">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <button class="btn-watch-video" id="openVideoBtn" aria-label="Watch Brewing Video">
+            <span class="video-play-icon">
+              <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M11 7L1 12.1962V1.80385L11 7Z" fill="currentColor"/></svg>
+            </span>
+            Watch Story
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-splash-wrapper animate-float">
+          <img src="assets/images/hero-coffee-splash.avif" alt="Fresh artisan coffee splash" class="hero-splash-img" />
+          <div class="hero-floating-card">
+            <div class="hero-floating-badge">★</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Rated 4.9 / 5.0</div>
+              <div style="font-size: 0.8rem; color: var(--gray-600);">Over 12,000+ happy drinkers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CATEGORY TICKER FILTER STRIP
+       ======================================================================== -->
+  <section class="category-strip">
+    <div class="container">
+      <div class="category-tags">
+        <button class="cat-pill active" data-category="all">All Roasts</button>
+        <button class="cat-pill" data-category="cold-brew">Shop Bundles</button>
+        <button class="cat-pill" data-category="dark-roast">Dark Roast</button>
+        <button class="cat-pill" data-category="organic">Shop Organic</button>
+        <button class="cat-pill" data-category="cold-brew">Cold Brews</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PRODUCTS & SIGNATURE FLAVORS MENU
+       ======================================================================== -->
+  <section class="products-section section-padding" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Handcrafted with care</span>
+        <h2>Popular Flavors</h2>
+        <p class="text-muted">Freshly prepared with double-shot espresso, small-batch roasted beans and premium botanicals.</p>
+      </div>
+
+      <!-- Reactive container loaded by store.js -->
+      <div class="product-grid" id="productsContainer">
+        <!-- Products will inject dynamically here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       ABOUT US & CRAFT STORY SECTION
+       ======================================================================== -->
+  <section class="about-section section-padding" id="about">
+    <div class="container about-grid">
+      <div class="about-image-stack">
+        <img src="assets/images/about-coffee-craft.avif" alt="Coffee Roasting Process" class="about-main-img" />
+        <div class="about-stat-card">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years of Artisan Roasting</div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <span class="section-subtitle">Our Heritage</span>
+        <h2>Crafted With Passion & Precision</h2>
+        <p>
+          Founded in Cleveland, Coffiko began with a singular mission: to bring single-origin purity and scientific precision to every cup.
+        </p>
+        <p>
+          We partner directly with sustainable coffee farmers across Ethiopia, Colombia, and Guatemala to ensure living wages and ecologically protected farming practices.
+        </p>
+
+        <div class="about-features-list">
+          <div class="about-feature-item">
+            <span class="check-bullet">✓</span> 100% Direct Fair-Trade Certified Sourcing
+          </div>
+          <div class="about-feature-item">
+            <span class="check-bullet">✓</span> Small-Batch Drum Roasting for Peak Aroma
+          </div>
+          <div class="about-feature-item">
+            <span class="check-bullet">✓</span> Nitrogen-Flushed Packaging for Unrivaled Freshness
+          </div>
+        </div>
+
+        <a href="#products" class="btn-magnetic btn-secondary">
+          Explore Our Menu
+          <span class="btn-icon-circle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       INFINITE VALUES MARQUEE TICKER
+       ======================================================================== -->
+  <div class="marquee-container" id="benefits">
+    <div class="marquee-track">
+      <div class="marquee-item"><span class="marquee-bullet"></span> Premium Quality</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Sustainable Farming</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Expert Roasting</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Fresh Always</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> 100% Arabica</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Hand-Picked Beans</div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item"><span class="marquee-bullet"></span> Premium Quality</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Sustainable Farming</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Expert Roasting</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Fresh Always</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> 100% Arabica</div>
+      <div class="marquee-item"><span class="marquee-bullet"></span> Hand-Picked Beans</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       CUSTOMER TESTIMONIALS SECTION
+       ======================================================================== -->
+  <section class="testimonials-section section-padding" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Real feedback</span>
+        <h2>It's Our Customers Who Love Us</h2>
+        <p class="text-muted">Discover why coffee purists and casual morning commuters make Coffiko their daily ritual.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card hover-lift">
+          <div class="star-rating">★★★★★</div>
+          <p class="testimonial-quote">
+            "The Iced Hazelnut Latte is hands-down the best cold beverage in town. You can immediately taste the freshness of the beans and the artisanal oat milk."
+          </p>
+          <div class="reviewer-profile">
+            <img src="assets/images/avatar-1.avif" alt="Emily Watson" class="reviewer-avatar" />
+            <div>
+              <div class="reviewer-name">Emily Watson</div>
+              <div class="reviewer-role">Architect & Coffee Enthusiast</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card hover-lift">
+          <div class="star-rating">★★★★★</div>
+          <p class="testimonial-quote">
+            "Their small-batch roasts have completely elevated my home pour-over routine. Balanced acidity, rich aroma, and incredibly fast delivery."
+          </p>
+          <div class="reviewer-profile">
+            <img src="assets/images/avatar-2.avif" alt="David Sterling" class="reviewer-avatar" />
+            <div>
+              <div class="reviewer-name">David Sterling</div>
+              <div class="reviewer-role">Creative Director</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card hover-lift">
+          <div class="star-rating">★★★★★</div>
+          <p class="testimonial-quote">
+            "Warm ambiance, knowledgeable baristas, and an ethical mission I am proud to support. The Cold Brew Delight is liquid gold!"
+          </p>
+          <div class="reviewer-profile">
+            <img src="assets/images/avatar-3.avif" alt="Samantha Ray" class="reviewer-avatar" />
+            <div>
+              <div class="reviewer-name">Samantha Ray</div>
+              <div class="reviewer-role">Food & Travel Writer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       VISUAL INSTAGRAM GALLERY SECTION
+       ======================================================================== -->
+  <section class="gallery-section section-padding" id="gallery" style="background: var(--brand-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Visual Moments</span>
+        <h2>Our Gallery</h2>
+        <p class="text-muted">Follow our daily roasting journey and cafe moments on Instagram @brewlab.cafe</p>
+      </div>
+
+      <div class="gallery-grid">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="gallery-card">
+          <img src="assets/images/gallery-1.avif" alt="Cafe Interior ambience" />
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-icon">↗</div>
+          </div>
+        </a>
+
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="gallery-card">
+          <img src="assets/images/gallery-2.avif" alt="Pour over brewing art" />
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-icon">↗</div>
+          </div>
+        </a>
+
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="gallery-card">
+          <img src="assets/images/gallery-3.avif" alt="Freshly roasted whole beans" />
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-icon">↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       NEWSLETTER VIP CTA SECTION
+       ======================================================================== -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Join Our Community Of Coffee Lovers</h2>
+        <p>Subscribe for exclusive first-access to rare seasonal micro-lots, brewing recipes, and member-only cafe perks.</p>
+        
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" class="newsletter-input" placeholder="Enter your email address..." required />
+          <button type="submit" class="btn-magnetic btn-secondary">
+            Join Now
+            <span class="btn-icon-circle">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER SECTION
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-bio">
+          <img src="assets/icons/coffiko-footer-logo.png" alt="Coffiko Logo" style="height: 44px; width: auto;" />
+          <p>
+            Cleveland-based artisan coffee roasters dedicated to small-batch purity, ethical sourcing, and handcrafted cafe drinks.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <div class="footer-links-list">
+            <a href="#about">About Us</a>
+            <a href="#products">Products</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#gallery">Gallery</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <div class="footer-links-list">
+            <a href="https://x.com" target="_blank" rel="noopener">Twitter / X</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>System & Pages</h4>
+          <div class="footer-links-list">
+            <a href="style-guide.html">Style Guide</a>
+            <a href="admin.html">Admin CMS</a>
+            <a href="license.html">License</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="404.html">404 Page</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Coffiko Roastery Inc. All rights reserved.</div>
+        <div class="footer-utility-links">
+          <a href="style-guide.html">Design System</a>
+          <span>•</span>
+          <a href="license.html">Licenses</a>
+          <span>•</span>
+          <a href="changelog.html">Changelog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LIGHTBOX VIDEO MODAL
+       ======================================================================== -->
+  <div class="lightbox-modal" id="videoLightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="closeVideoBtn" aria-label="Close Video">&times;</button>
+      <iframe id="lightboxIframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- GSAP Animation CDNs with local fallbacks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Core Application Scripts -->
+  <script src="js/store.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
