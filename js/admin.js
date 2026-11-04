@@ -121,6 +121,16 @@ function renderDashboard() {
   renderLeadsTable(leads);
 }
 
+function escapeHTML(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function renderProductsTable(products) {
   const tbody = document.getElementById('productsTableBody');
   if (!tbody) return;
@@ -129,18 +139,18 @@ function renderProductsTable(products) {
     <tr>
       <td>
         <div style="display: flex; align-items: center; gap: 12px;">
-          <img src="${p.image}" alt="${p.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: contain; background: #f8f5f1;">
+          <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: contain; background: #f8f5f1;">
           <div>
-            <strong>${p.name}</strong><br>
-            <span style="color: #6b7280; font-size: 12px;">${p.category}</span>
+            <strong>${escapeHTML(p.name)}</strong><br>
+            <span style="color: #6b7280; font-size: 12px;">${escapeHTML(p.category)}</span>
           </div>
         </div>
       </td>
       <td><strong>৳${Number(p.price).toLocaleString()}</strong></td>
-      <td><span class="status-badge status-ready">${p.badge || 'Standard'}</span></td>
+      <td><span class="status-badge status-ready">${escapeHTML(p.badge || 'Standard')}</span></td>
       <td>
-        <button onclick="editProduct('${p.id}')" style="background: none; border: none; cursor: pointer; color: #2563eb; font-weight: 600; margin-right: 8px;">Edit</button>
-        <button onclick="deleteProduct('${p.id}')" style="background: none; border: none; cursor: pointer; color: #dc2626; font-weight: 600;">Delete</button>
+        <button onclick="editProduct('${escapeHTML(p.id)}')" style="background: none; border: none; cursor: pointer; color: #2563eb; font-weight: 600; margin-right: 8px;">Edit</button>
+        <button onclick="deleteProduct('${escapeHTML(p.id)}')" style="background: none; border: none; cursor: pointer; color: #dc2626; font-weight: 600;">Delete</button>
       </td>
     </tr>
   `).join('');
@@ -152,18 +162,18 @@ function renderOrdersTable(orders) {
 
   tbody.innerHTML = orders.map(o => `
     <tr>
-      <td><strong>${o.id}</strong></td>
-      <td>${o.customerName}</td>
-      <td>${o.item}</td>
+      <td><strong>${escapeHTML(o.id)}</strong></td>
+      <td>${escapeHTML(o.customerName)}</td>
+      <td>${escapeHTML(o.item)}</td>
       <td><strong>৳${Number(o.total).toLocaleString()}</strong></td>
       <td>
-        <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding: 4px 8px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 13px;">
+        <select onchange="updateOrderStatus('${escapeHTML(o.id)}', this.value)" style="padding: 4px 8px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 13px;">
           <option value="Brewing" ${o.status === 'Brewing' ? 'selected' : ''}>Brewing</option>
           <option value="Ready" ${o.status === 'Ready' ? 'selected' : ''}>Ready</option>
           <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>Completed</option>
         </select>
       </td>
-      <td>${o.time || 'Recent'}</td>
+      <td>${escapeHTML(o.time || 'Recent')}</td>
     </tr>
   `).join('');
 }

@@ -38,6 +38,17 @@ function initNavbar() {
   }
 }
 
+// Security helper: sanitize dynamic strings to prevent XSS injection
+function escapeHTML(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // --- Dynamic Products & Category Filtering ---
 function initDynamicProducts() {
   const container = document.getElementById('productsContainer');
@@ -56,18 +67,18 @@ function initDynamicProducts() {
     }
 
     container.innerHTML = filtered.map(prod => `
-      <div class="product-card hover-lift" data-id="${prod.id}">
+      <div class="product-card hover-lift" data-id="${escapeHTML(prod.id)}">
         <div class="card-top">
-          <span class="product-badge">${prod.badge || 'Artisan'}</span>
-          <img src="${prod.image}" alt="${prod.name}" class="product-thumb" loading="lazy" />
+          <span class="product-badge">${escapeHTML(prod.badge || 'Artisan')}</span>
+          <img src="${escapeHTML(prod.image)}" alt="${escapeHTML(prod.name)}" class="product-thumb" loading="lazy" />
         </div>
         <div class="product-info">
-          <h3>${prod.name}</h3>
-          <p class="product-notes">${prod.notes}</p>
+          <h3>${escapeHTML(prod.name)}</h3>
+          <p class="product-notes">${escapeHTML(prod.notes)}</p>
         </div>
         <div class="card-bottom">
           <div class="product-price">৳${Number(prod.price).toLocaleString()}</div>
-          <button class="btn-magnetic btn-order-quick" data-id="${prod.id}" data-name="${prod.name}" data-price="${prod.price}">
+          <button class="btn-magnetic btn-order-quick" data-id="${escapeHTML(prod.id)}" data-name="${escapeHTML(prod.name)}" data-price="${prod.price}">
             Order Now
             <span class="btn-icon-circle">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
