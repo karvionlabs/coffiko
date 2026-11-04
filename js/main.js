@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGalleryLightbox();
   initNewsletter();
   initToast();
+  initOwnerSecretTrigger();
 });
 
 // --- Sticky Navbar & Mobile Drawer ---
@@ -199,7 +200,7 @@ function initGalleryLightbox() {
   });
 }
 
-// --- Newsletter Subscription ---
+// --- Newsletter Subscription with Strict Validation & Anti-XSS ---
 function initNewsletter() {
   const form = document.getElementById('newsletterForm');
   if (!form) return;
@@ -207,16 +208,26 @@ function initNewsletter() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const input = form.querySelector('.newsletter-input');
-    const email = input ? input.value.trim() : '';
-    if (email && window.brewlabStore) {
-      window.brewlabStore.addLead(email);
-      showToast('🎉 Welcome to Coffiko VIP Club! Check your inbox.');
+    const rawEmail = input ? input.value.trim() : '';
+
+    // Strict email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
+    if (!rawEmail || !emailRegex.test(rawEmail) || rawEmail.length > 100) {
+      showToast('⚠️ অনুগ্রহ করে একটি সঠিক ইমেইল এড্রেস প্রদান করুন।');
+      return;
+    }
+
+    const cleanEmail = escapeHTML(rawEmail);
+
+    if (window.brewlabStore) {
+      window.brewlabStore.addLead(cleanEmail);
+      showToast('🎉 Coffiko VIP ক্লাবে আপনাকে স্বাগতম! শীঘ্রই কনফার্মেশন পাবেন।');
       form.reset();
     }
   });
 }
 
-// --- Global Toast Notification ---
+// --- Global Toast Notification (XSS-Safe) ---
 let toastTimeout;
 function showToast(message) {
   let toast = document.querySelector('.toast-notice');
@@ -225,10 +236,52 @@ function showToast(message) {
     toast.className = 'toast-notice';
     document.body.appendChild(toast);
   }
-  toast.innerHTML = `<span>${message}</span>`;
+  toast.textContent = message;
   toast.classList.add('show');
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 4000);
+}
+
+// --- Secret Owner Admin Trigger (Hidden from Public & Search Crawlers) ---
+function initOwnerSecretTrigger() {
+  // 1. Secret Hotkey: Ctrl + Shift + A (or Cmd + Shift + A)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
+      showToast('🔒 Owner Vault সিকিউরিটি গেটওয়ে ওপেন হচ্ছে...');
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 500);
+    }
+  });
+
+  // 2. Secret Gesture: Triple-click on footer emblem logo
+  const footerLogo = document.querySelector('.footer-brand img');
+  if (footerLogo) {
+    let clickCount = 0;
+    let clickTimer = null;
+    footerLogo.style.cursor = 'default';
+    footerLogo.title = '';
+    footerLogo.addEventListener('click', () => {
+      clickCount++;
+      clearTimeout(clickTimer);
+      if (clickCount >= 3) {
+        clickCount = 0;
+        showToast('🔒 Owner Vault সিকিউরিটি গেটওয়ে ওপেন হচ্ছে...');
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 500);
+      } else {
+        clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+      }
+    });
+  }
+
+  // 3. Secret Hash URL access check (e.g. index.html#vault or #admin)
+  if (window.location.hash === '#vault' || window.location.hash === '#admin') {
+    history.replaceState(null, null, ' ');
+    window.location.href = 'admin.html';
+  }
 }

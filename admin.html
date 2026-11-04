@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coffiko – Admin Panel & CMS</title>
+  <title>Coffiko – Owner Admin Vault & Store Console</title>
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  
+  <!-- Security Headers & Anti-Leak Policies -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; connect-src 'self' https:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Anti-Clickjacking Frame-Busting Protection -->
+  <script>
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+  </script>
+
   <link rel="stylesheet" href="css/design-tokens.css" />
   <link rel="stylesheet" href="css/admin.css" />
 </head>
@@ -15,38 +28,48 @@
        ======================================================================== -->
   <aside class="admin-sidebar">
     <div class="admin-brand">
-      <img src="assets/icons/coffiko-footer-logo.png" alt="Coffiko Logo" style="height: 42px; width: auto;" />
+      <img src="assets/icons/coffiko-footer-logo.png" alt="Coffiko Logo" style="height: 44px; width: auto;" />
     </div>
 
-    <!-- Authenticated Admin Profile -->
-    <div class="admin-user-profile" id="adminUserProfile" style="padding: 10px 14px; background: rgba(255,255,255,0.08); border-radius: 8px; margin-bottom: 20px; font-size: 13px; display: flex; align-items: center; justify-content: space-between;">
-      <div>
-        <span style="opacity: 0.7; font-size: 11px; display: block; text-transform: uppercase; letter-spacing: 0.5px;">User</span>
-        <strong id="loggedUserDisplay" style="color: #facc15; font-family: monospace; font-size: 14px;">coffiko</strong>
+    <!-- Authenticated Admin Profile & Security Indicator -->
+    <div class="admin-user-profile" id="adminUserProfile" style="padding: 12px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; margin-bottom: 20px; font-size: 13px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <span style="opacity: 0.7; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Authorized Owner</span>
+        <span style="font-size: 10px; background: rgba(34,197,94,0.2); color: #4ade80; padding: 2px 6px; border-radius: 4px; font-weight: 600;">ACTIVE</span>
       </div>
-      <button id="btnLogout" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer;">লগআউট</button>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <strong id="loggedUserDisplay" style="color: #facc15; font-family: monospace; font-size: 14px;">coffiko</strong>
+        <button id="btnLogout" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.2s;">লগআউট</button>
+      </div>
+      <div style="margin-top: 8px; font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
+        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e;"></span>
+        <span>অটো-লগআউট: <span id="sessionTimerDisplay" style="color: #facc15; font-family: monospace;">15:00</span></span>
+      </div>
     </div>
 
     <nav class="admin-nav">
       <div class="admin-nav-item active" data-tab="tab-overview">
-        <span>📊</span> Dashboard Overview
+        <span>📊</span> ড্যাশবোর্ড ওভারভিউ
       </div>
       <div class="admin-nav-item" data-tab="tab-products">
-        <span>☕</span> Menu & Products
+        <span>☕</span> কফি মেনু ও স্টক
       </div>
       <div class="admin-nav-item" data-tab="tab-orders">
-        <span>🛒</span> Live Orders
+        <span>🛒</span> লাইভ অর্ডার
       </div>
       <div class="admin-nav-item" data-tab="tab-leads">
-        <span>✉️</span> VIP Leads
+        <span>✉️</span> ভিআইপি সাবস্ক্রাইবার্স
+      </div>
+      <div class="admin-nav-item" data-tab="tab-security">
+        <span>🔐</span> সিকিউরিটি ও পিন ভল্ট
       </div>
       <div class="admin-nav-item" data-tab="tab-settings">
-        <span>⚙️</span> Store Settings
+        <span>⚙️</span> স্টোর কনফিগারেশন
       </div>
     </nav>
 
     <a href="index.html" class="admin-footer-btn">
-      <span>←</span> Back to Live Website
+      <span>←</span> মূল ওয়েবসাইটে ফিরে যান
     </a>
   </aside>
 
@@ -56,31 +79,52 @@
   <main class="admin-main">
     <div class="admin-header">
       <div>
-        <h1>Coffiko Management Console</h1>
-        <p style="color: #6b7280; font-size: 14px;">Real-time CMS, product catalogue & order tracking</p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <h1>Coffiko Management Console</h1>
+          <span style="font-size: 11px; padding: 4px 8px; background: #e0e7ff; color: #3730a3; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">ZERO-LEAK SECURE</span>
+        </div>
+        <p style="color: #6b7280; font-size: 14px;">রিয়েল-টাইম লোকাল সিএমএস, মেনু কন্ট্রোল ও সিকিউরিটি ভল্ট</p>
       </div>
       <button class="btn-magnetic" id="btnAddProduct" style="padding: 10px 20px; font-size: 13px;">
-        + Add New Coffee
+        + নতুন কফি আইটেম যোগ করুন
       </button>
     </div>
 
     <!-- Quick Stats Grid -->
     <div class="admin-stats-grid">
       <div class="stat-card">
-        <div class="stat-card-title">Menu Items</div>
+        <div class="stat-card-title">মোট মেনু আইটেম</div>
         <div class="stat-card-val" id="statTotalProducts">4</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-title">Active Orders</div>
+        <div class="stat-card-title">সক্রিয় অর্ডার</div>
         <div class="stat-card-val" id="statActiveOrders" style="color: var(--brand-accent);">2</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-title">Today's Revenue</div>
+        <div class="stat-card-title">মোট বিক্রি (আজ)</div>
         <div class="stat-card-val" id="statRevenue" style="color: #10b981;">৳1,110</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-title">VIP Subscribers</div>
+        <div class="stat-card-title">ভিআইপি লিডস</div>
         <div class="stat-card-val" id="statTotalLeads">2</div>
+      </div>
+    </div>
+
+    <!-- Live Security Shield Banner -->
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff; border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; border: 1px solid rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; font-size: 22px;">
+          🛡️
+        </div>
+        <div>
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 4px; color: #f8fafc;">জিরো-লিক সিকিউরিটি শিল্ড সক্রিয়</h4>
+          <p style="font-size: 12px; color: #94a3b8; margin: 0;">কোনো থার্ড-পার্টি ট্র্যাকার নেই • SHA-256 এনক্রিপ্টেড পিন গেটওয়ে • ব্রুট-ফোর্স রেট-লিমিট সক্রিয়</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button id="btnExportQuickBackup" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #f8fafc; font-size: 12px; padding: 8px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+          💾 ব্যাকআপ ডাউনলোড
+        </button>
       </div>
     </div>
 
@@ -88,16 +132,16 @@
     <section class="admin-tab-content active" id="tab-overview">
       <div class="admin-panel-card">
         <div class="panel-header-actions">
-          <h2>Active Menu Overview</h2>
-          <span style="font-size: 13px; color: #6b7280;">Synced with Local CMS Data Store</span>
+          <h2>সক্রিয় মেনু তালিকা (Active Menu)</h2>
+          <span style="font-size: 13px; color: #6b7280;">লোকাল সিএমএস স্টোরের সাথে রিয়েলটাইম সিঙ্ক</span>
         </div>
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Coffee Item</th>
-              <th>Price</th>
-              <th>Badge</th>
-              <th>Actions</th>
+              <th>কফি আইটেম</th>
+              <th>মূল্য (টাকা)</th>
+              <th>ব্যাজ</th>
+              <th>অ্যাকশন</th>
             </tr>
           </thead>
           <tbody id="productsTableBody">
@@ -111,22 +155,21 @@
     <section class="admin-tab-content" id="tab-products">
       <div class="admin-panel-card">
         <div class="panel-header-actions">
-          <h2>Product Inventory Management</h2>
-          <button class="btn-magnetic" onclick="document.getElementById('btnAddProduct').click()" style="padding: 8px 16px; font-size: 12px;">+ Add Item</button>
+          <h2>সম্পূর্ণ কফি ক্যাটালগ ম্যানেজমেন্ট</h2>
+          <button class="btn-magnetic" onclick="document.getElementById('btnAddProduct').click()" style="padding: 8px 16px; font-size: 12px;">
+            + নতুন আইটেম
+          </button>
         </div>
-        <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">
-          Changes made here reflect immediately on the public customer homepage without recompilation.
-        </p>
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Coffee Item</th>
-              <th>Price</th>
-              <th>Badge</th>
-              <th>Actions</th>
+              <th>আইটেম ও ছবি</th>
+              <th>মূল্য</th>
+              <th>ক্যাটাগরি</th>
+              <th>অ্যাকশন</th>
             </tr>
           </thead>
-          <tbody id="productsTableBodyFull">
+          <tbody id="productsDetailTableBody">
             <!-- Dynamically populated -->
           </tbody>
         </table>
@@ -137,17 +180,18 @@
     <section class="admin-tab-content" id="tab-orders">
       <div class="admin-panel-card">
         <div class="panel-header-actions">
-          <h2>Live Coffee Orders</h2>
+          <h2>গ্রাহকদের লাইভ অর্ডার তালিকা</h2>
+          <span style="font-size: 13px; color: #6b7280;">ক্লিক করে স্ট্যাটাস আপডেট করুন</span>
         </div>
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Items Ordered</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Time</th>
+              <th>অর্ডার আইডি</th>
+              <th>গ্রাহক</th>
+              <th>আইটেম</th>
+              <th>মোট মূল্য</th>
+              <th>স্ট্যাটাস</th>
+              <th>সময়</th>
             </tr>
           </thead>
           <tbody id="ordersTableBody">
@@ -161,14 +205,15 @@
     <section class="admin-tab-content" id="tab-leads">
       <div class="admin-panel-card">
         <div class="panel-header-actions">
-          <h2>VIP Community Subscribers</h2>
+          <h2>ভিআইপি ক্লাব সাবস্ক্রাইবার্স</h2>
+          <span style="font-size: 13px; color: #6b7280;">ওয়েবসাইটের নিউজলেটার ফর্ম থেকে সংগৃহীত</span>
         </div>
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Email Address</th>
-              <th>Subscribed Date</th>
-              <th>Status</th>
+              <th>ইমেইল এড্রেস</th>
+              <th>তারিখ</th>
+              <th>স্ট্যাটাস</th>
             </tr>
           </thead>
           <tbody id="leadsTableBody">
@@ -178,26 +223,86 @@
       </div>
     </section>
 
-    <!-- TAB 5: SETTINGS -->
+    <!-- TAB 5: SECURITY & PIN VAULT -->
+    <section class="admin-tab-content" id="tab-security">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px;">
+        
+        <!-- Change PIN Card -->
+        <div class="admin-panel-card">
+          <div class="panel-header-actions">
+            <h2>🔐 সিকিউরিটি পিন পরিবর্তন করুন</h2>
+          </div>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">
+            আপনার অ্যাডমিন প্যানেল সুরক্ষিত রাখতে নিয়মিত পিন পরিবর্তন করুন। নতুন পিনটি স্বয়ংক্রিয়ভাবে ব্রাউজারে SHA-256 হ্যাশ আকারে সংরক্ষিত হবে।
+          </p>
+          <form id="changePinForm">
+            <div class="form-group">
+              <label for="currentPinInput">বর্তমান পিন (Current PIN)</label>
+              <input type="password" id="currentPinInput" required maxlength="12" class="form-control" placeholder="••••" />
+            </div>
+            <div class="form-group">
+              <label for="newPinInput">নতুন পিন (New PIN - ৪ থেকে ১২ ডিজিট)</label>
+              <input type="password" id="newPinInput" required minlength="4" maxlength="12" class="form-control" placeholder="নতুন পিন লিখুন" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPinInput">নতুন পিন নিশ্চিত করুন</label>
+              <input type="password" id="confirmPinInput" required minlength="4" maxlength="12" class="form-control" placeholder="পুনরায় নতুন পিন দিন" />
+            </div>
+            <div id="pinChangeAlert" style="display: none; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+            <button type="submit" class="btn-magnetic" style="padding: 10px 24px;">পিন আপডেট করুন</button>
+          </form>
+        </div>
+
+        <!-- Data Backup & Disaster Recovery -->
+        <div class="admin-panel-card">
+          <div class="panel-header-actions">
+            <h2>💾 ডেটা ব্যাকআপ ও রিকভারি</h2>
+          </div>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">
+            আপনার ক্যাটালগ, পণ্যের দাম ও গ্রাহক তথ্যের সম্পূর্ণ ব্যাকআপ ফাইল (.json) এক্সপোর্ট করুন অথবা পূর্বের ব্যাকআপ রিস্টোর করুন।
+          </p>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <button type="button" id="btnDownloadBackupFile" class="btn-magnetic btn-outline" style="justify-content: center; padding: 12px;">
+              📥 সম্পূর্ণ ব্যাকআপ ডাউনলোড করুন (JSON)
+            </button>
+
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 14px; margin-top: 6px;">
+              <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px;">ব্যাকআপ ফাইল থেকে রিস্টোর করুন:</label>
+              <input type="file" id="backupFileInput" accept=".json" class="form-control" style="padding: 8px;" />
+            </div>
+
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 14px; margin-top: 6px;">
+              <button type="button" id="btnFactoryReset" style="width: 100%; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                ⚠️ ফ্যাক্টরি রিসেট (ডিফল্ট ডাটাতে ফিরিয়ে নিন)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 6: SETTINGS -->
     <section class="admin-tab-content" id="tab-settings">
       <div class="admin-panel-card" style="max-width: 600px;">
         <div class="panel-header-actions">
-          <h2>Store Configuration</h2>
+          <h2>স্টোর কনফিগারেশন ও বিবরণ</h2>
         </div>
         <form id="settingsForm">
           <div class="form-group">
-            <label for="shopNameInput">Cafe & Roastery Name</label>
+            <label for="shopNameInput">ক্যাফে ও রোস্টারির নাম</label>
             <input type="text" id="shopNameInput" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="announcementInput">Hero Announcement Ticker</label>
+            <label for="announcementInput">ঘোষণা টিকার (Hero Announcement Ticker)</label>
             <input type="text" id="announcementInput" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="contactEmailInput">Order Notification Target Email</label>
+            <label for="contactEmailInput">অর্ডার নোটিফিকেশন ইমেইল</label>
             <input type="email" id="contactEmailInput" class="form-control" />
           </div>
-          <button type="submit" class="btn-magnetic" style="margin-top: 10px;">Save Settings</button>
+          <button type="submit" class="btn-magnetic" style="margin-top: 10px;">সেটিংস সংরক্ষণ করুন</button>
         </form>
       </div>
     </section>
@@ -208,18 +313,18 @@
        ======================================================================== -->
   <div class="admin-modal" id="productModal">
     <div class="modal-dialog">
-      <h3 id="modalTitle" style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">Add New Coffee</h3>
+      <h3 id="modalTitle" style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">নতুন কফি যোগ করুন</h3>
       <form id="productForm">
         <input type="hidden" id="modalProductId" />
         
         <div class="form-group">
-          <label>Item Name</label>
+          <label>কফির নাম (Item Name)</label>
           <input type="text" id="prodName" class="form-control" required placeholder="e.g. Vanilla Cold Foam Espresso" />
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div class="form-group">
-            <label>Category</label>
+            <label>ক্যাটাগরি</label>
             <select id="prodCategory" class="form-control">
               <option value="cold-brew">Cold Brew</option>
               <option value="dark-roast">Dark Roast</option>
@@ -227,67 +332,81 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Price (৳ BDT)</label>
+            <label>মূল্য (৳ BDT)</label>
             <input type="number" step="1" id="prodPrice" class="form-control" required placeholder="380" />
           </div>
         </div>
 
         <div class="form-group">
-          <label>Badge (Optional)</label>
-          <input type="text" id="prodBadge" class="form-control" placeholder="e.g. Popular, Signature, Limited" />
+          <label>ব্যাজ (ঐচ্ছিক)</label>
+          <input type="text" id="prodBadge" class="form-control" placeholder="e.g. Popular, Signature, Artisan" />
         </div>
 
         <div class="form-group">
-          <label>Tasting Notes & Ingredients</label>
-          <textarea id="prodNotes" class="form-control" rows="3" placeholder="Brief tasting notes..."></textarea>
+          <label>উপাদান ও টেস্টিং নোটস</label>
+          <textarea id="prodNotes" class="form-control" rows="3" placeholder="কফির উপাদান ও স্বাদ সম্পর্কে লিখুন..."></textarea>
         </div>
 
         <div class="form-group">
-          <label>Image Asset Path</label>
+          <label>ছবির পাথ (Image Asset Path)</label>
           <input type="text" id="prodImage" class="form-control" value="assets/images/product-roast-1.avif" />
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
-          <button type="button" id="btnCancelProduct" class="btn-magnetic btn-outline" style="padding: 10px 20px;">Cancel</button>
-          <button type="submit" class="btn-magnetic" style="padding: 10px 24px;">Save Item</button>
+          <button type="button" id="btnCancelProduct" class="btn-magnetic btn-outline" style="padding: 10px 20px;">বাতিল</button>
+          <button type="submit" class="btn-magnetic" style="padding: 10px 24px;">সংরক্ষণ করুন</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ========================================================================
-       ADMIN AUTHENTICATION GATEWAY (USER: coffiko / PIN: 2026)
+       ADMIN AUTHENTICATION GATEWAY (SHA-256 HASHED & RATE-LIMITED)
        ======================================================================== -->
-  <div id="adminAuthOverlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); z-index: 99999; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 16px; padding: 36px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); text-align: center; border: 1px solid rgba(226, 232, 240, 0.8);">
-      <div style="margin-bottom: 20px;">
-        <img src="assets/icons/favicon.png" alt="Coffiko" style="width: 52px; height: 52px; border-radius: 12px; background: #1c1917; padding: 8px;" />
+  <div id="adminAuthOverlay" style="display: none; position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(14px); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #18181b; width: 100%; max-width: 440px; border-radius: 20px; padding: 40px 36px; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7); text-align: center; border: 1px solid rgba(212, 175, 55, 0.35); position: relative;">
+      
+      <!-- Top Crest & Security Emblem -->
+      <div style="margin-bottom: 22px;">
+        <div style="width: 68px; height: 68px; margin: 0 auto; border-radius: 18px; background: #09090b; border: 1px solid rgba(212,175,55,0.4); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(212,175,55,0.15);">
+          <img src="assets/icons/favicon.png" alt="Coffiko" style="width: 42px; height: 42px;" />
+        </div>
       </div>
-      <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #1c1917; margin-bottom: 6px;">Coffiko Admin Console</h2>
-      <p style="color: #64748b; font-size: 13px; margin-bottom: 24px;">Please authenticate to access store management</p>
+
+      <div style="display: inline-block; padding: 4px 12px; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; font-size: 11px; font-weight: 600; color: #facc15; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+        🔒 OWNER SECURITY VAULT
+      </div>
+
+      <h2 style="font-family: var(--font-heading); font-size: 1.8rem; color: #f8fafc; margin-bottom: 8px; letter-spacing: 0.5px;">Coffiko Admin Console</h2>
+      <p style="color: #94a3b8; font-size: 13px; margin-bottom: 28px;">দোকান পরিচালনার জন্য আপনার ইউজারনেম ও গোপন পিন দিন</p>
 
       <form id="authLoginForm" autocomplete="off">
-        <div style="text-align: left; margin-bottom: 16px;">
-          <label style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Username</label>
-          <input type="text" id="authUsernameInput" required class="form-control" placeholder="Enter username (e.g. coffiko)" style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-family: monospace;" />
+        <div style="text-align: left; margin-bottom: 18px;">
+          <label style="display: block; font-size: 11px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Username</label>
+          <input type="text" id="authUsernameInput" required class="form-control" placeholder="Enter username (coffiko)" style="width: 100%; padding: 12px 14px; background: #27272a; border: 1px solid #3f3f46; color: #f8fafc; border-radius: 10px; font-size: 14px; font-family: monospace;" />
         </div>
 
         <div style="text-align: left; margin-bottom: 20px;">
-          <label style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Security PIN</label>
-          <input type="password" id="authPinInput" required maxlength="10" class="form-control" placeholder="••••" style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 16px; letter-spacing: 3px; font-family: monospace;" />
+          <label style="display: block; font-size: 11px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Security PIN</label>
+          <input type="password" id="authPinInput" required maxlength="12" class="form-control" placeholder="••••" style="width: 100%; padding: 12px 14px; background: #27272a; border: 1px solid #3f3f46; color: #f8fafc; border-radius: 10px; font-size: 18px; letter-spacing: 4px; font-family: monospace;" />
         </div>
 
-        <div id="authErrorMsg" style="display: none; padding: 10px 12px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; border-radius: 8px; font-size: 13px; margin-bottom: 16px; font-weight: 500;">
-          ভুল ইউজারনেম বা সিকিউরিটি পিন! সঠিক তথ্য দিন।
+        <div id="authErrorMsg" style="display: none; padding: 12px 14px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; border-radius: 10px; font-size: 13px; margin-bottom: 18px; font-weight: 500; text-align: left;">
+          ভুল ক্রেডেনশিয়াল! সঠিক তথ্য দিন।
         </div>
 
-        <button type="submit" class="btn-magnetic" style="width: 100%; padding: 12px; font-size: 14px; justify-content: center; background: #1c1917; color: #ffffff; border-radius: 8px; cursor: pointer;">
-          🔓 প্রবেশ করুন (Sign In)
+        <div id="authLockoutMsg" style="display: none; padding: 12px 14px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: #fde047; border-radius: 10px; font-size: 13px; margin-bottom: 18px; font-weight: 500; text-align: left;">
+          ⚠️ একাধিক ব্যর্থ চেষ্টার কারণে সিস্টেম সাময়িকভাবে লক রয়েছে। অনুগ্রহ করে অপেক্ষা করুন: <span id="lockoutTimerSpan" style="font-family: monospace; font-weight: 700;"></span>
+        </div>
+
+        <button type="submit" id="btnSubmitAuth" class="btn-magnetic" style="width: 100%; padding: 13px; font-size: 14px; font-weight: 600; justify-content: center; background: #d4af37; color: #18181b; border-radius: 10px; cursor: pointer; border: none; transition: all 0.2s;">
+          🔓 প্রবেশ করুন (Sign In to Vault)
         </button>
       </form>
 
-      <div style="margin-top: 20px; font-size: 12px; color: #94a3b8;">
-        Protected by Coffiko Zero-Leak Security & PIN Gateway
+      <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: #71717a; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <span>🛡️</span>
+        <span>SHA-256 Crypto Shield & Anti-Brute Force Gateway</span>
       </div>
     </div>
   </div>

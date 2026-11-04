@@ -6,6 +6,11 @@
   <title>Coffiko – Artisan Coffee & Specialty Roasters</title>
   <meta name="description" content="Coffiko is a modern artisan cafe and specialty roastery offering ethically sourced small-batch coffee beans and cold brews." />
   
+  <!-- Security Headers & Anti-Leak Policies -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://wa.me https://www.youtube-nocookie.com; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
   <!-- OpenGraph / Social Metadata -->
   <meta property="og:title" content="Coffiko – Cafe & Coffee Roasters" />
   <meta property="og:description" content="Ethically sourced, hand-picked beans expertly roasted in small batches." />
@@ -396,8 +401,8 @@
         <div class="footer-col">
           <h4>System & Pages</h4>
           <div class="footer-links-list">
+            <a href="#products">Coffee Menu</a>
             <a href="style-guide.html">Style Guide</a>
-            <a href="admin.html">Admin CMS</a>
             <a href="license.html">License</a>
             <a href="changelog.html">Changelog</a>
             <a href="404.html">404 Page</a>
