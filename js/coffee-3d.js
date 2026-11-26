@@ -234,26 +234,32 @@
       metalness: 0.08
     });
 
-    // 1. Kettle Pot Body (Conical pour-over silhouette)
-    const bodyGeo = new THREE.CylinderGeometry(0.44, 0.68, 0.95, 48);
-    const body = new THREE.Mesh(bodyGeo, kettleBodyMat);
-    kettleGroup.add(body);
+    // 1. Kettle Pot Body (Artisan two-stage tapered pour-over silhouette)
+    const lowerBodyGeo = new THREE.CylinderGeometry(0.56, 0.70, 0.50, 48);
+    const lowerBody = new THREE.Mesh(lowerBodyGeo, kettleBodyMat);
+    lowerBody.position.y = -0.22;
+    kettleGroup.add(lowerBody);
+
+    const upperBodyGeo = new THREE.CylinderGeometry(0.42, 0.56, 0.48, 48);
+    const upperBody = new THREE.Mesh(upperBodyGeo, kettleBodyMat);
+    upperBody.position.y = 0.26;
+    kettleGroup.add(upperBody);
 
     // 2. Base Ring (Gold trim)
-    const baseGeo = new THREE.CylinderGeometry(0.69, 0.69, 0.05, 48);
+    const baseGeo = new THREE.CylinderGeometry(0.71, 0.71, 0.05, 48);
     const baseMesh = new THREE.Mesh(baseGeo, goldAccentMat);
-    baseMesh.position.y = -0.48;
+    baseMesh.position.y = -0.47;
     kettleGroup.add(baseMesh);
 
     // 3. Kettle Lid Rim & Top Dome
-    const lidRimGeo = new THREE.CylinderGeometry(0.46, 0.46, 0.05, 48);
+    const lidRimGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.05, 48);
     const lidRim = new THREE.Mesh(lidRimGeo, goldAccentMat);
-    lidRim.position.y = 0.49;
+    lidRim.position.y = 0.50;
     kettleGroup.add(lidRim);
 
-    const lidDomeGeo = new THREE.SphereGeometry(0.38, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.6);
+    const lidDomeGeo = new THREE.SphereGeometry(0.36, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.6);
     const lidDome = new THREE.Mesh(lidDomeGeo, kettleBodyMat);
-    lidDome.position.y = 0.50;
+    lidDome.position.y = 0.51;
     kettleGroup.add(lidDome);
 
     // 4. Brass Knob on Top of Lid
@@ -267,28 +273,28 @@
     knob.position.y = 0.76;
     kettleGroup.add(knob);
 
-    // 5. Artisan Gooseneck Spout (Iconic S-Curve sweeping from lower body toward the cup)
+    // 5. Artisan Gooseneck Spout (Gracefully sweeping S-Curve)
     const spoutCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-0.45, -0.22, 0),    // attaches to lower belly
-      new THREE.Vector3(-0.85, -0.25, 0),    // sweeps outward low
-      new THREE.Vector3(-1.15, 0.05, 0),     // curves upward
-      new THREE.Vector3(-1.30, 0.35, 0),     // top of the gooseneck arch
-      new THREE.Vector3(-1.42, 0.22, 0)      // bent nozzle pointing down towards the cup!
+      new THREE.Vector3(-0.48, -0.20, 0),     // base of spout attached to lower kettle wall
+      new THREE.Vector3(-0.85, -0.22, 0),     // gentle outward extension
+      new THREE.Vector3(-1.18, 0.08, 0),      // smooth upward curve
+      new THREE.Vector3(-1.38, 0.36, 0),      // graceful crest of the gooseneck
+      new THREE.Vector3(-1.52, 0.24, 0)       // downward angled pour nozzle tip
     ]);
-    const spoutGeo = new THREE.TubeGeometry(spoutCurve, 48, 0.045, 16, false);
+    const spoutGeo = new THREE.TubeGeometry(spoutCurve, 48, 0.052, 20, false);
     const spoutMesh = new THREE.Mesh(spoutGeo, kettleBodyMat);
     kettleGroup.add(spoutMesh);
 
     // Golden Spout Tip Nozzle Collar
-    const nozzleGeo = new THREE.CylinderGeometry(0.048, 0.052, 0.09, 16);
-    nozzleGeo.rotateZ(Math.PI / 4);
+    const nozzleGeo = new THREE.CylinderGeometry(0.054, 0.058, 0.10, 16);
+    nozzleGeo.rotateZ(Math.PI / 3.8);
     const nozzle = new THREE.Mesh(nozzleGeo, goldAccentMat);
-    nozzle.position.set(-1.42, 0.22, 0);
+    nozzle.position.set(-1.52, 0.24, 0);
     kettleGroup.add(nozzle);
 
     // Marker for exact nozzle tip world coordinate calculation
     nozzleMarker = new THREE.Object3D();
-    nozzleMarker.position.set(-1.46, 0.18, 0);
+    nozzleMarker.position.set(-1.56, 0.20, 0);
     kettleGroup.add(nozzleMarker);
 
     // 6. Ergonomic Barista Wood/Brass Handle
@@ -327,15 +333,15 @@
       endPos
     );
 
-    const streamGeo = new THREE.TubeGeometry(streamCurve, 48, 0.042, 16, false);
+    const streamGeo = new THREE.TubeGeometry(streamCurve, 64, 0.052, 20, false);
 
     // Liquid Coffee Stream Material (Rich dark espresso with translucent sheen)
     const streamMat = new THREE.MeshStandardMaterial({
-      color: 0x3d1706,
-      roughness: 0.08,
+      color: 0x361608,
+      roughness: 0.06,
       metalness: 0.22,
       transparent: true,
-      opacity: 0.95
+      opacity: 0.96
     });
 
     streamMesh = new THREE.Mesh(streamGeo, streamMat);
