@@ -832,9 +832,9 @@ h4, .h4 {
 
 .hero-3d-shadow {
   position: absolute;
-  bottom: 40px;
-  left: 22%;
-  width: 55%;
+  bottom: 35px;
+  left: 18%;
+  width: 50%;
   height: 24px;
   background: radial-gradient(ellipse at center, rgba(38, 24, 17, 0.45) 0%, rgba(38, 24, 17, 0) 70%);
   border-radius: 50%;

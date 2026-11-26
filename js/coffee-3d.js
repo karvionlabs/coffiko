@@ -30,8 +30,8 @@
     const height = container.clientHeight || 480;
 
     camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 1.2, 5.8);
-    camera.lookAt(0, -0.1, 0);
+    camera.position.set(0.1, 0.5, 6.2);
+    camera.lookAt(0.1, 0.2, 0);
 
     // 2. WebGL Renderer with High Performance & Alpha
     renderer = new THREE.WebGLRenderer({
@@ -96,7 +96,7 @@
   // --- 4. BUILD 3D COFFEE CUP & SAUCER ---
   function buildCup(parent) {
     cupGroup = new THREE.Group();
-    cupGroup.position.set(-0.25, -1.05, 0.2);
+    cupGroup.position.set(-0.35, -0.85, 0.1);
 
     // Ceramic Porcelain Material
     const porcelainMat = new THREE.MeshStandardMaterial({
@@ -203,89 +203,103 @@
   }
 
   // --- 5. BUILD 3D ARTISAN GOOSENECK KETTLE ---
+  let nozzleMarker;
+
   function buildKettle(parent) {
     kettleGroup = new THREE.Group();
-    // Positioned in upper right, angled forward-downward pouring
-    kettleGroup.position.set(1.4, 1.65, 0.3);
-    kettleGroup.rotation.z = -0.58; // ~33 deg tilt
-    kettleGroup.rotation.y = 0.35;
-    kettleGroup.rotation.x = 0.15;
+    // Positioned gracefully in upper right quadrant, naturally tilted forward-downward pouring
+    kettleGroup.position.set(1.20, 0.95, 0.15);
+    kettleGroup.rotation.z = 0.38; // ~22 deg natural barista pour tilt towards cup
+    kettleGroup.rotation.y = -0.22;
+    kettleGroup.rotation.x = 0.10;
 
-    // Metallic Titanium / Bronze Material
+    // Metallic Obsidian / Matte Black Titanium Material
     const kettleBodyMat = new THREE.MeshStandardMaterial({
-      color: 0x221a15,
-      metalness: 0.88,
-      roughness: 0.22
+      color: 0x1c1714,
+      metalness: 0.82,
+      roughness: 0.28
     });
 
-    // Golden Accent Material for spout tip, lid knob, and rim
+    // Polished Brass Accent Material for spout collar, lid knob, and rim
     const goldAccentMat = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
-      metalness: 0.92,
-      roughness: 0.18
+      metalness: 0.94,
+      roughness: 0.16
     });
 
-    // Wood/Matte Ergonomic Handle Grip
+    // Walnut Wood Ergonomic Grip
     const woodGripMat = new THREE.MeshStandardMaterial({
-      color: 0x4a2818,
-      roughness: 0.5,
-      metalness: 0.1
+      color: 0x3d2012,
+      roughness: 0.55,
+      metalness: 0.08
     });
 
-    // Kettle Pot Body (Tapered Gooseneck Base)
-    const bodyGeo = new THREE.CylinderGeometry(0.65, 0.95, 1.4, 48);
+    // 1. Kettle Pot Body (Conical pour-over silhouette)
+    const bodyGeo = new THREE.CylinderGeometry(0.44, 0.68, 0.95, 48);
     const body = new THREE.Mesh(bodyGeo, kettleBodyMat);
     kettleGroup.add(body);
 
-    // Bottom Base Plate
-    const baseGeo = new THREE.CylinderGeometry(0.96, 0.96, 0.08, 48);
+    // 2. Base Ring (Gold trim)
+    const baseGeo = new THREE.CylinderGeometry(0.69, 0.69, 0.05, 48);
     const baseMesh = new THREE.Mesh(baseGeo, goldAccentMat);
-    baseMesh.position.y = -0.7;
+    baseMesh.position.y = -0.48;
     kettleGroup.add(baseMesh);
 
-    // Kettle Lid Rim & Top Dome
-    const lidRimGeo = new THREE.CylinderGeometry(0.67, 0.67, 0.08, 48);
+    // 3. Kettle Lid Rim & Top Dome
+    const lidRimGeo = new THREE.CylinderGeometry(0.46, 0.46, 0.05, 48);
     const lidRim = new THREE.Mesh(lidRimGeo, goldAccentMat);
-    lidRim.position.y = 0.72;
+    lidRim.position.y = 0.49;
     kettleGroup.add(lidRim);
 
-    const lidDomeGeo = new THREE.SphereGeometry(0.55, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.8);
+    const lidDomeGeo = new THREE.SphereGeometry(0.38, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.6);
     const lidDome = new THREE.Mesh(lidDomeGeo, kettleBodyMat);
-    lidDome.position.y = 0.73;
+    lidDome.position.y = 0.50;
     kettleGroup.add(lidDome);
 
-    // Brass Knob on Top of Lid
-    const knobGeo = new THREE.SphereGeometry(0.12, 16, 16);
+    // 4. Brass Knob on Top of Lid
+    const knobStemGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.08, 16);
+    const knobStem = new THREE.Mesh(knobStemGeo, goldAccentMat);
+    knobStem.position.y = 0.70;
+    kettleGroup.add(knobStem);
+
+    const knobGeo = new THREE.SphereGeometry(0.09, 16, 16);
     const knob = new THREE.Mesh(knobGeo, goldAccentMat);
-    knob.position.y = 1.05;
+    knob.position.y = 0.76;
     kettleGroup.add(knob);
 
-    // Gooseneck Spout (Iconic S-Curve)
-    const spoutCurve = new THREE.CubicBezierCurve3(
-      new THREE.Vector3(-0.7, -0.3, 0),
-      new THREE.Vector3(-1.45, -0.15, 0),
-      new THREE.Vector3(-1.6, 0.85, 0),
-      new THREE.Vector3(-1.95, 0.75, 0) // Nozzle tip
-    );
-    const spoutGeo = new THREE.TubeGeometry(spoutCurve, 48, 0.09, 20, false);
+    // 5. Artisan Gooseneck Spout (Iconic S-Curve sweeping from lower body toward the cup)
+    const spoutCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.45, -0.22, 0),    // attaches to lower belly
+      new THREE.Vector3(-0.85, -0.25, 0),    // sweeps outward low
+      new THREE.Vector3(-1.15, 0.05, 0),     // curves upward
+      new THREE.Vector3(-1.30, 0.35, 0),     // top of the gooseneck arch
+      new THREE.Vector3(-1.42, 0.22, 0)      // bent nozzle pointing down towards the cup!
+    ]);
+    const spoutGeo = new THREE.TubeGeometry(spoutCurve, 48, 0.045, 16, false);
     const spoutMesh = new THREE.Mesh(spoutGeo, kettleBodyMat);
     kettleGroup.add(spoutMesh);
 
-    // Golden Spout Tip Nozzle
-    const nozzleGeo = new THREE.CylinderGeometry(0.08, 0.09, 0.15, 20);
-    nozzleGeo.rotateZ(Math.PI / 3);
+    // Golden Spout Tip Nozzle Collar
+    const nozzleGeo = new THREE.CylinderGeometry(0.048, 0.052, 0.09, 16);
+    nozzleGeo.rotateZ(Math.PI / 4);
     const nozzle = new THREE.Mesh(nozzleGeo, goldAccentMat);
-    nozzle.position.set(-1.95, 0.75, 0);
+    nozzle.position.set(-1.42, 0.22, 0);
     kettleGroup.add(nozzle);
 
-    // Kettle Handle
-    const handleCurve = new THREE.CubicBezierCurve3(
-      new THREE.Vector3(0.68, 0.5, 0),
-      new THREE.Vector3(1.35, 0.6, 0),
-      new THREE.Vector3(1.4, -0.5, 0),
-      new THREE.Vector3(0.88, -0.45, 0)
-    );
-    const handleGeo = new THREE.TubeGeometry(handleCurve, 32, 0.075, 16, false);
+    // Marker for exact nozzle tip world coordinate calculation
+    nozzleMarker = new THREE.Object3D();
+    nozzleMarker.position.set(-1.46, 0.18, 0);
+    kettleGroup.add(nozzleMarker);
+
+    // 6. Ergonomic Barista Wood/Brass Handle
+    const handleCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.45, 0.30, 0),
+      new THREE.Vector3(0.85, 0.35, 0),
+      new THREE.Vector3(0.95, -0.05, 0),
+      new THREE.Vector3(0.80, -0.35, 0),
+      new THREE.Vector3(0.55, -0.30, 0)
+    ]);
+    const handleGeo = new THREE.TubeGeometry(handleCurve, 32, 0.055, 16, false);
     const handleMesh = new THREE.Mesh(handleGeo, woodGripMat);
     kettleGroup.add(handleMesh);
 
@@ -294,25 +308,34 @@
 
   // --- 6. BUILD POURING COFFEE STREAM ---
   function buildPouringStream(parent) {
-    // Parabolic pouring trajectory from kettle nozzle to center of the cup
-    // Spout nozzle world pos: ~ (0.05, 1.4, 0.25)
-    // Cup liquid world pos: ~ (-0.25, -0.1, 0.2)
+    // Calculate world position of nozzle tip
+    kettleGroup.updateMatrixWorld(true);
+    const startPos = new THREE.Vector3();
+    if (nozzleMarker) {
+      nozzleMarker.getWorldPosition(startPos);
+    } else {
+      startPos.set(-0.15, 0.62, 0.12);
+    }
+
+    const endPos = new THREE.Vector3(-0.35, 0.10, 0.10); // Center of coffee liquid in cup
+
+    // Natural fluid parabolic pouring trajectory under gravity
     streamCurve = new THREE.CubicBezierCurve3(
-      new THREE.Vector3(0.08, 1.52, 0.28),   // Starts at kettle spout
-      new THREE.Vector3(-0.05, 1.05, 0.25),  // Flowing down curve
-      new THREE.Vector3(-0.22, 0.45, 0.22),  // Acceleration gravity curve
-      new THREE.Vector3(-0.25, -0.09, 0.2)   // Reaches cup surface
+      startPos,
+      new THREE.Vector3(startPos.x - 0.06, startPos.y - 0.20, startPos.z + 0.02),
+      new THREE.Vector3(endPos.x + 0.04, endPos.y + 0.22, endPos.z + 0.01),
+      endPos
     );
 
-    const streamGeo = new THREE.TubeGeometry(streamCurve, 48, 0.052, 16, false);
+    const streamGeo = new THREE.TubeGeometry(streamCurve, 48, 0.042, 16, false);
 
-    // Liquid Coffee Stream Material (Rich chocolate-brown with translucent sheen)
+    // Liquid Coffee Stream Material (Rich dark espresso with translucent sheen)
     const streamMat = new THREE.MeshStandardMaterial({
-      color: 0x4a210d,
-      roughness: 0.1,
-      metalness: 0.25,
+      color: 0x3d1706,
+      roughness: 0.08,
+      metalness: 0.22,
       transparent: true,
-      opacity: 0.94
+      opacity: 0.95
     });
 
     streamMesh = new THREE.Mesh(streamGeo, streamMat);
@@ -322,9 +345,9 @@
   // --- 7. BUILD SPLASHING MICRO-DROPLETS ---
   function buildSplashes(parent) {
     const dropletCount = 45;
-    const dropletGeo = new THREE.SphereGeometry(0.032, 8, 8);
+    const dropletGeo = new THREE.SphereGeometry(0.028, 8, 8);
     const dropletMat = new THREE.MeshStandardMaterial({
-      color: 0x5a2d12,
+      color: 0x4a210d,
       roughness: 0.12,
       metalness: 0.25
     });
@@ -342,21 +365,21 @@
   function resetDroplet(mesh) {
     // Originates from impact point inside cup
     mesh.position.set(
-      -0.25 + (Math.random() - 0.5) * 0.12,
-      -0.08,
-      0.2 + (Math.random() - 0.5) * 0.12
+      -0.35 + (Math.random() - 0.5) * 0.12,
+      0.10,
+      0.10 + (Math.random() - 0.5) * 0.12
     );
 
     // Splash outwards in all radial directions with upward velocity
     const angle = Math.random() * Math.PI * 2;
-    const speed = 0.015 + Math.random() * 0.035;
+    const speed = 0.014 + Math.random() * 0.032;
 
     mesh.userData = {
       vx: Math.cos(angle) * speed,
-      vy: 0.045 + Math.random() * 0.065, // Upward burst
+      vy: 0.040 + Math.random() * 0.060, // Upward burst
       vz: Math.sin(angle) * speed,
-      gravity: -0.0028,
-      scale: 0.4 + Math.random() * 0.7,
+      gravity: -0.0026,
+      scale: 0.4 + Math.random() * 0.65,
       life: 0,
       maxLife: 35 + Math.floor(Math.random() * 30)
     };
@@ -411,9 +434,9 @@
   function resetSteamParticle(sprite) {
     // Originates from hot coffee cup surface
     sprite.position.set(
-      -0.25 + (Math.random() - 0.5) * 0.4,
-      -0.05 + Math.random() * 0.08,
-      0.2 + (Math.random() - 0.5) * 0.4
+      -0.35 + (Math.random() - 0.5) * 0.35,
+      0.12 + Math.random() * 0.08,
+      0.10 + (Math.random() - 0.5) * 0.35
     );
 
     sprite.userData = {
@@ -506,24 +529,24 @@
     mouse.x = THREE.MathUtils.lerp(mouse.x, mouse.targetX, 0.06);
     mouse.y = THREE.MathUtils.lerp(mouse.y, mouse.targetY, 0.06);
 
-    camera.position.x = mouse.x * 0.45;
-    camera.position.y = 1.2 - mouse.y * 0.35;
-    camera.lookAt(0, -0.05, 0);
+    camera.position.x = 0.1 + mouse.x * 0.45;
+    camera.position.y = 0.5 - mouse.y * 0.35;
+    camera.lookAt(0.1, 0.2, 0);
 
     // 2. Natural Barista Hand Micro-Shake on Kettle
     if (kettleGroup) {
       // Harmonic micro-tremor simulating liquid mass and hand-pour
-      const microShake = Math.sin(time * 10.0) * 0.016 + Math.cos(time * 22.0) * 0.008;
-      const breathTilt = Math.sin(time * 2.0) * 0.025;
+      const microShake = Math.sin(time * 10.0) * 0.012 + Math.cos(time * 22.0) * 0.006;
+      const breathTilt = Math.sin(time * 2.0) * 0.018;
 
-      kettleGroup.rotation.z = -0.58 + microShake + (isHovered ? 0.05 : 0);
-      kettleGroup.position.y = 1.65 + Math.sin(time * 3.5) * 0.025;
-      kettleGroup.position.x = 1.4 + Math.cos(time * 2.8) * 0.015;
+      kettleGroup.rotation.z = 0.38 + microShake + (isHovered ? 0.025 : 0);
+      kettleGroup.position.y = 0.95 + Math.sin(time * 3.5) * 0.015;
+      kettleGroup.position.x = 1.20 + Math.cos(time * 2.8) * 0.010;
     }
 
     // 3. Coffee Cup Micro-Vibration & Ripple
     if (cupGroup) {
-      cupGroup.position.y = -1.05 + Math.sin(time * 12.0) * 0.003;
+      cupGroup.position.y = -0.85 + Math.sin(time * 12.0) * 0.002;
     }
 
     // 4. Liquid Ripple Expansion
