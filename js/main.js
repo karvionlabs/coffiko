@@ -4,6 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (window.coffikoI18n) window.coffikoI18n.init();
   initNavbar();
   initDynamicProducts();
   initTableBookingModal();
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGalleryLightbox();
   initNewsletter();
   initToast();
+  initPolicyModals();
   initOwnerSecretTrigger();
 });
 
@@ -63,32 +65,42 @@ function initDynamicProducts() {
       ? products 
       : products.filter(p => p.category === categoryFilter);
 
+    const isBn = (window.coffikoI18n ? window.coffikoI18n.currentLang : (localStorage.getItem('coffiko_lang') || 'bn')) === 'bn';
+
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray-600);">No coffee items found in this roast category.</div>`;
+      const emptyMsg = isBn ? 'এই ক্যাটাগরিতে বর্তমানে কোনো কফি আইটেম পাওয়া যায়নি।' : 'No coffee items found in this roast category.';
+      container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray-600);">${emptyMsg}</div>`;
       return;
     }
 
-    container.innerHTML = filtered.map(prod => `
+    container.innerHTML = filtered.map(prod => {
+      const pName = (isBn && prod.name_bn) ? prod.name_bn : prod.name;
+      const pNotes = (isBn && prod.notes_bn) ? prod.notes_bn : prod.notes;
+      const pBadge = (isBn && prod.badge_bn) ? prod.badge_bn : (prod.badge || 'Artisan');
+      const btnText = isBn ? 'বুকিং দিন' : 'Booking Now';
+
+      return `
       <div class="product-card hover-lift" data-id="${escapeHTML(prod.id)}">
         <div class="card-top">
-          <span class="product-badge">${escapeHTML(prod.badge || 'Artisan')}</span>
-          <img src="${escapeHTML(prod.image)}" alt="${escapeHTML(prod.name)}" class="product-thumb" loading="lazy" />
+          <span class="product-badge">${escapeHTML(pBadge)}</span>
+          <img src="${escapeHTML(prod.image)}" alt="${escapeHTML(pName)}" class="product-thumb" loading="lazy" />
         </div>
         <div class="product-info">
-          <h3>${escapeHTML(prod.name)}</h3>
-          <p class="product-notes">${escapeHTML(prod.notes)}</p>
+          <h3>${escapeHTML(pName)}</h3>
+          <p class="product-notes">${escapeHTML(pNotes)}</p>
         </div>
         <div class="card-bottom">
           <div class="product-price">৳${Number(prod.price).toLocaleString()}</div>
-          <button class="btn-magnetic btn-order-quick" data-id="${escapeHTML(prod.id)}" data-name="${escapeHTML(prod.name)}" data-price="${prod.price}">
-            Booking Now
+          <button class="btn-magnetic btn-order-quick" data-id="${escapeHTML(prod.id)}" data-name="${escapeHTML(pName)}" data-price="${prod.price}">
+            ${btnText}
             <span class="btn-icon-circle">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </button>
         </div>
       </div>
-    `).join('');
+      `;
+    }).join('');
 
     // Attach booking click listeners
     document.querySelectorAll('.btn-order-quick').forEach(btn => {
@@ -116,6 +128,12 @@ function initDynamicProducts() {
 
   // Re-render when store updates
   window.addEventListener('brewlab:products-updated', () => {
+    const activePill = document.querySelector('.cat-pill.active');
+    render(activePill ? activePill.getAttribute('data-category') : 'all');
+  });
+
+  // Re-render when language toggles
+  window.addEventListener('coffiko:lang-changed', () => {
     const activePill = document.querySelector('.cat-pill.active');
     render(activePill ? activePill.getAttribute('data-category') : 'all');
   });
@@ -369,6 +387,10 @@ function initNewsletter() {
 
 // --- Global Toast Notification (XSS-Safe) ---
 let toastTimeout;
+function initToast() {
+  // Lazily initialized container
+}
+
 function showToast(message) {
   let toast = document.querySelector('.toast-notice');
   if (!toast) {
@@ -382,6 +404,120 @@ function showToast(message) {
   toastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 4000);
+}
+
+// --- Legal & Store Policy Modals (Privacy, Terms, Booking/Return) ---
+function initPolicyModals() {
+  const modal = document.getElementById('policyModal');
+  const titleEl = document.getElementById('policyModalTitle');
+  const contentEl = document.getElementById('policyModalContent');
+  const closeBtn = document.getElementById('closePolicyBtn');
+  const policyLinks = document.querySelectorAll('.policy-link');
+
+  if (!modal || !titleEl || !contentEl) return;
+
+  const policies = {
+    privacy: {
+      title_en: 'Coffiko Privacy Policy',
+      title_bn: 'কফিকো প্রাইভেসি পলিসি',
+      body_en: `
+        <p><strong>Effective Date:</strong> January 2026</p>
+        <p>At Coffiko Roastery, your privacy is paramount. This policy details how we handle the information you provide during table reservations and store interactions.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">1. Information We Collect</h4>
+        <p>We only collect the contact information (full name, phone number / WhatsApp, email, reservation date and guest count) that you voluntarily supply when reserving a table or subscribing to our coffee club.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">2. Zero Third-Party Sharing</h4>
+        <p>We never sell, rent, or trade your personal data. All guest details remain strictly within our private database and are utilized solely for confirming lounge reservations, service updates, and exclusive club benefits.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">3. Direct Contact</h4>
+        <p>If you have any questions or wish to delete your reservation record, reach out directly at <strong>info@coffiko.com</strong> or WhatsApp <strong>+880 1884-636312</strong>.</p>
+      `,
+      body_bn: `
+        <p><strong>কার্যকর তারিখ:</strong> জানুয়ারি ২০২৬</p>
+        <p>কফিকো রোস্টারিতে আপনার ব্যক্তিগত তথ্যের গোপনীয়তা ও সুরক্ষা আমাদের সর্বোচ্চ অগ্রাধিকার। টেবিল বুকিং ও সেবা গ্রহণের সময় প্রদত্ত তথ্য আমরা কীভাবে সংরক্ষণ করি তা নিচে ব্যাখ্যা করা হলো:</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">১. সংগৃহীত তথ্য</h4>
+        <p>আমরা শুধুমাত্র আপনার নাম, ফোন / হোয়াটসঅ্যাপ নম্বর, ইমেইল, আগমনের তারিখ ও অতিথি সংখ্যা সংগ্রহ করি যা টেবিল বুকিং বা কফি ক্লাবে যুক্ত হওয়ার সময় আপনি নিজে প্রদান করেন।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">২. জিরো থার্ড-পার্টি শেয়ারিং</h4>
+        <p>আমরা কোনো তৃতীয় পক্ষের কাছে আপনার কোনো তথ্য বিক্রয়, ভাড়া বা শেয়ার করি না। আপনার তথ্য শুধুমাত্র লাউঞ্জ আসন নিশ্চিতকরণ ও কাস্টমার সাপোর্টের জন্য ব্যবহৃত হয়।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">৩. সরাসরি যোগাযোগ</h4>
+        <p>আপনার তথ্যের কোনো পরিবর্তন বা মুছে ফেলার অনুরোধ জানাতে সরাসরি ইমেইল করুন <strong>info@coffiko.com</strong> অথবা হোয়াটসঅ্যাপ করুন <strong>+৮৮০ ১৮৮৪-৬৩৬৩১২</strong> নম্বরে।</p>
+      `
+    },
+    terms: {
+      title_en: 'Terms & Lounge Conditions',
+      title_bn: 'শর্তাবলী ও ক্যাফে নিয়মাবলী',
+      body_en: `
+        <p><strong>Welcome to Coffiko Artisan Roastery & Coffee Lounge.</strong> By visiting our lounge or reserving a table, you agree to the following terms:</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">1. Table Reservation & Grace Period</h4>
+        <p>Reserved tables are held for up to 20 minutes past the scheduled arrival time. If you expect a delay, please notify us via WhatsApp so we can hold your seat.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">2. In-Lounge Experience & Dining Etiquette</h4>
+        <p>We are a dedicated dine-in artisan coffee lounge celebrating quiet ambiance and specialty tasting sessions. We ask our guests to maintain a pleasant sound level and respect the shared space.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">3. Pricing & Billing</h4>
+        <p>All prices displayed on the website are listed in Bangladeshi Taka (BDT) inclusive of applicable taxes.</p>
+      `,
+      body_bn: `
+        <p><strong>কফিকো রোস্টারি ও ক্যাফে লাউঞ্জে স্বাগতম।</strong> আমাদের লাউঞ্জে আগমন বা টেবিল বুকিংয়ের ক্ষেত্রে নিম্নলিখিত শর্তাবলী প্রযোজ্য:</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">১. টেবিল বুকিং ও গ্রেস পিরিয়ড</h4>
+        <p>বুকিংকৃত টেবিল নির্ধারিত সময়ের পর ২০ মিনিট পর্যন্ত সংরক্ষিত থাকে। বিলম্ব হলে অনুগ্রহ করে আমাদের হোয়াটসঅ্যাপে আগেই জানিয়ে দিন।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">২. লাউঞ্জ পরিবেশ ও শিষ্টাচার</h4>
+        <p>কফিকো একটি প্রিমিয়াম ডাইন-ইন স্পেশালিটি কফি লাউঞ্জ। শান্ত ও আনন্দদায়ক পরিবেশ বজায় রাখতে সবার সহযোগিতা কাম্য।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">৩. মূল্য ও বিলিং</h4>
+        <p>ওয়েবসাইটে প্রদর্শিত সকল মূল্য বাংলাদেশি টাকায় (BDT) নির্ধারিত এবং প্রযোজ্য ভ্যাট অন্তর্ভুক্ত।</p>
+      `
+    },
+    delivery: {
+      title_en: 'Booking & Cancellation Policy',
+      title_bn: 'বুকিং ও বাতিলকরণ পলিসি',
+      body_en: `
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">1. Dine-In Reservation Policy (Not Home Delivery)</h4>
+        <p>Coffiko provides direct artisanal lounge seating and live brewing experiences. We do not operate home delivery for hot coffee drinks to ensure optimal extraction taste profile.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">2. Free Cancellation & Rescheduling</h4>
+        <p>We understand schedules change! You can reschedule or cancel your lounge reservation anytime up to 1 hour before your scheduled slot via WhatsApp or direct phone call with zero cancellation charges.</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">3. Artisan Roasted Beans Guarantee</h4>
+        <p>Packaged roasted coffee beans purchased at our counter carry a 7-day roast-freshness exchange guarantee if the packaging seal is intact.</p>
+      `,
+      body_bn: `
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">১. ডাইন-ইন বুকিং পলিসি (হোম ডেলিভারি নয়)</h4>
+        <p>কফিকো সরাসরি স্পেশালিটি লাউঞ্জে বসে প্রিমিয়াম কফির স্বাদ আস্বাদন করার স্থান। সর্বোচ্চ কোয়ালিটি ও সঠিক ফ্লেভার প্রোফাইল বজায় রাখতে আমরা হট কফি হোম ডেলিভারি করি না।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">২. ফ্রি বুকিং পরিবর্তন ও বাতিল</h4>
+        <p>যেকোনো জরুরি প্রয়োজনে বুকিং সময়ের ১ ঘণ্টা আগে হোয়াটসঅ্যাপ বা ফোন কলের মাধ্যমে সম্পূর্ণ বিনামূল্যে বুকিং রিশিডিউল বা বাতিল করা যাবে।</p>
+        <h4 style="margin: 16px 0 8px; color: var(--brand-primary); font-family: var(--font-heading);">৩. রোস্টেড কফি বিনস গ্যারান্টি</h4>
+        <p>আমাদের লাউঞ্জ থেকে কেনা প্যাকেজড বিনসের ক্ষেত্রে প্যাকেট অক্ষত থাকা সাপেক্ষে ৭ দিনের মধ্যে এক্সচেঞ্জ সুবিধা রয়েছে।</p>
+      `
+    }
+  };
+
+  function openPolicy(policyKey) {
+    const isBn = (window.coffikoI18n ? window.coffikoI18n.currentLang : (localStorage.getItem('coffiko_lang') || 'bn')) === 'bn';
+    const policy = policies[policyKey] || policies.privacy;
+    titleEl.textContent = isBn ? policy.title_bn : policy.title_en;
+    contentEl.innerHTML = isBn ? policy.body_bn : policy.body_en;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePolicy() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  policyLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pKey = link.getAttribute('data-policy') || 'privacy';
+      openPolicy(pKey);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closePolicy);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closePolicy();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closePolicy();
+    }
+  });
 }
 
 // --- Secret Owner Admin Trigger (Hidden from Public & Search Crawlers) ---

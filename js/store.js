@@ -4,7 +4,7 @@
  */
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'coffiko_products_bdt_v2',
+  PRODUCTS: 'coffiko_products_bdt_v3',
   ORDERS: 'coffiko_orders_bdt_v2',
   LEADS: 'coffiko_leads_bdt_v2',
   SETTINGS: 'coffiko_settings_bdt_v2'
@@ -14,41 +14,79 @@ const DEFAULT_PRODUCTS = [
   {
     id: 'prod-1',
     name: 'Iced Hazelnut Latte',
+    name_bn: 'আইসড হ্যাজেলনাট ল্যাটে',
     category: 'cold-brew',
     price: 380,
     badge: 'Popular',
-    notes: 'প্রিমিয়াম হ্যাজেলনাট সিরাপ, ডাবল রিস্ট্রেত্তো এস্প্রেসো এবং হিমশীতল ফ্রেশ মিল্ক।',
+    badge_bn: 'জনপ্রিয়',
+    notes: 'Premium roasted hazelnut syrup, double ristretto espresso and chilled artisanal oat milk.',
+    notes_bn: 'প্রিমিয়াম হ্যাজেলনাট সিরাপ, ডাবল রিস্ট্রেত্তো এস্প্রেসো এবং হিমশীতল ফ্রেশ মিল্ক।',
     image: 'assets/images/product-roast-1.avif',
     inStock: true
   },
   {
     id: 'prod-2',
     name: 'Cold Brew Delight',
+    name_bn: 'কোল্ড ব্রিউ ডিলাইট',
     category: 'cold-brew',
     price: 350,
     badge: 'Best Seller',
-    notes: '২৪ ঘণ্টার স্লো-ড্রিপ ইথিওপিয়ান সিঙ্গেল-অরিজিন ডার্ক রোস্টেড কোল্ড কফি।',
+    badge_bn: 'বেস্ট সেলার',
+    notes: '24-hour slow-drip Ethiopian single-origin dark roast steep over crystal ice.',
+    notes_bn: '২৪ ঘণ্টার স্লো-ড্রিপ ইথিওপিয়ান সিঙ্গেল-অরিজিন ডার্ক রোস্টেড কোল্ড কফি।',
     image: 'assets/images/product-roast-2.avif',
     inStock: true
   },
   {
     id: 'prod-3',
     name: 'Mocha Fusion Roast',
+    name_bn: 'মোকা ফিউশন রোস্ট',
     category: 'dark-roast',
     price: 440,
     badge: 'Signature',
-    notes: 'ভ্যালভেটি ডার্ক চকলেট ও তাজা কলম্বিয়ান কফি বিনের ব্লেন্ডেড স্বাদে ভরপুর।',
+    badge_bn: 'সিগনেচার',
+    notes: 'Velvety dark chocolate melted with freshly extracted Colombian beans and silky crema.',
+    notes_bn: 'ভ্যালভেটি ডার্ক চকলেট ও তাজা কলম্বিয়ান কফি বিনের ব্লেন্ডেড স্বাদে ভরপুর।',
     image: 'assets/images/product-roast-3.avif',
     inStock: true
   },
   {
     id: 'prod-4',
     name: 'Single Origin Organic Beans',
+    name_bn: 'সিঙ্গেল অরিজিন অর্গানিক বিন্স',
     category: 'organic',
     price: 1150,
     badge: 'Artisan',
-    notes: '২৫০ গ্রাম প্রিমিয়াম অ্যারাবিকা হোল কফি বিন্স, হোম ব্রিউইং-এর জন্য সেরা পছন্দ।',
+    badge_bn: 'হস্তনির্মিত',
+    notes: '250g whole roasted Arabica beans, hand-sorted at high-altitude micro-lots.',
+    notes_bn: '২৫০ গ্রাম প্রিমিয়াম অ্যারাবিকা হোল কফি বিন্স, হোম ব্রিউইং-এর জন্য সেরা পছন্দ।',
     image: 'assets/images/about-coffee-craft.avif',
+    inStock: true
+  },
+  {
+    id: 'prod-5',
+    name: 'Spanish Cortado Velvet',
+    name_bn: 'স্প্যানিশ কর্টাদো ভেলভেট',
+    category: 'dark-roast',
+    price: 390,
+    badge: 'Barista Pick',
+    badge_bn: 'বারিস্তা পিক',
+    notes: 'Rich espresso cut 1:1 with warm textured condensed milk in classic Madrid style.',
+    notes_bn: 'কনডেন্সড মিল্ক ও ডাবল এস্প্রেসোর ১:১ ভেলভেটি টেক্সচার, স্প্যানিশ স্টাইলে প্রস্তুত।',
+    image: 'assets/images/gallery-2.avif',
+    inStock: true
+  },
+  {
+    id: 'prod-6',
+    name: 'Caramel Affogato Royale',
+    name_bn: 'ক্যারামেল আফোগাতো রয়্যাল',
+    category: 'cold-brew',
+    price: 460,
+    badge: 'Dessert Special',
+    badge_bn: 'স্পেশাল ডেজার্ট',
+    notes: 'Artisan Madagascan vanilla bean gelato drowned in a piping hot double espresso shot.',
+    notes_bn: 'ভ্যানিলা জেলাটোর স্কুপের ওপর গরম ফ্রেশ এস্প্রেসো শট এবং ক্যারামেল ড্রিজল।',
+    image: 'assets/images/gallery-3.avif',
     inStock: true
   }
 ];
@@ -68,7 +106,13 @@ class BrewlabStore {
   }
 
   init() {
-    if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {
+    let storedProds = null;
+    try {
+      storedProds = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS) || '[]');
+    } catch (e) {
+      storedProds = null;
+    }
+    if (!storedProds || !Array.isArray(storedProds) || storedProds.length < 6) {
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(DEFAULT_PRODUCTS));
     }
     if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
