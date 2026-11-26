@@ -278,21 +278,25 @@ function initLightbox() {
   const trigger = document.getElementById('openVideoBtn');
   const modal = document.getElementById('videoLightbox');
   const closeBtn = document.getElementById('closeVideoBtn');
-  const iframe = document.getElementById('lightboxIframe');
+  const video = document.getElementById('lightboxVideo');
 
   if (!trigger || !modal) return;
 
-  const videoUrl = "https://www.youtube-nocookie.com/embed/O6_z1_zLIOI?autoplay=1";
-
   trigger.addEventListener('click', (e) => {
     e.preventDefault();
-    if (iframe) iframe.src = videoUrl;
     modal.classList.add('active');
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
   });
 
   function closeModal() {
     modal.classList.remove('active');
-    if (iframe) iframe.src = '';
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
   }
 
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
