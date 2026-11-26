@@ -932,12 +932,41 @@ h4, .h4 {
 }
 
 @media (max-width: 768px) {
+  .site-header {
+    height: 72px;
+  }
+  .nav-wrapper {
+    height: 72px;
+  }
+  .brand-logo img {
+    height: 34px;
+    max-width: 140px;
+  }
+  .nav-actions {
+    gap: 8px;
+  }
+  #navBookingBtn {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    gap: 6px;
+    border-radius: var(--radius-full);
+  }
+  #navBookingBtn .btn-icon-circle {
+    width: 20px;
+    height: 20px;
+  }
+  #navBookingBtn .btn-icon-circle svg {
+    width: 10px;
+    height: 10px;
+  }
   .mobile-toggle {
     display: block;
+    padding: 6px;
   }
   .nav-menu {
     position: fixed;
-    top: 84px;
+    top: 72px;
     left: 0;
     width: 100%;
     background: var(--brand-background);
@@ -960,6 +989,39 @@ h4, .h4 {
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    height: 64px;
+  }
+  .nav-wrapper {
+    height: 64px;
+  }
+  .brand-logo img {
+    height: 28px;
+    max-width: 120px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  #navBookingBtn {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  #navBookingBtn .btn-icon-circle {
+    width: 18px;
+    height: 18px;
+  }
+  #navBookingBtn .btn-icon-circle svg {
+    width: 8px;
+    height: 8px;
+  }
+  .nav-menu {
+    top: 64px;
   }
 }
 

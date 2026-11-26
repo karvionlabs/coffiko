@@ -7,7 +7,7 @@
   <meta name="description" content="Coffiko is a modern artisan cafe and specialty roastery offering ethically sourced small-batch coffee beans and cold brews." />
   
   <!-- Security Headers & Anti-Leak Policies -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://wa.me https://www.youtube-nocookie.com; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://wa.me https://www.youtube-nocookie.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   
@@ -18,10 +18,15 @@
   <meta property="og:image" content="assets/images/hero-cup.png" />
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
 
+  <!-- Google Fonts: Hind Siliguri for flawless Bengali typography & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/design-tokens.css?v=2" />
   <link rel="stylesheet" href="css/animations.css?v=2" />
-  <link rel="stylesheet" href="css/main.css?v=3" />
+  <link rel="stylesheet" href="css/main.css?v=5" />
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
