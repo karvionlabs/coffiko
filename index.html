@@ -7,12 +7,9 @@
   <meta name="description" content="Coffiko is a modern artisan cafe and specialty roastery offering ethically sourced small-batch coffee beans and cold brews." />
   
   <!-- Security Headers & Anti-Leak Policies -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://wa.me https://www.youtube-nocookie.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://wa.me https://www.youtube-nocookie.com; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   
   <!-- OpenGraph / Social Metadata -->
   <meta property="og:title" content="Coffiko – Cafe & Coffee Roasters" />
@@ -22,9 +19,9 @@
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/design-tokens.css?v=3.4" />
-  <link rel="stylesheet" href="css/animations.css?v=3.4" />
-  <link rel="stylesheet" href="css/main.css?v=3.4" />
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/main.css" />
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -73,28 +70,21 @@
       </a>
 
       <nav class="nav-menu" role="navigation">
-        <a href="#about" class="nav-link" data-i18n="nav.about">আমাদের সম্পর্কে</a>
-        <a href="#products" class="nav-link" data-i18n="nav.products">কফি মেনু</a>
-        <a href="#benefits" class="nav-link" data-i18n="nav.benefits">বিশেষত্ব</a>
-        <a href="#testimonials" class="nav-link" data-i18n="nav.testimonials">রিভিউ</a>
-        <a href="#gallery" class="nav-link" data-i18n="nav.gallery">গ্যালারি</a>
-        <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!" target="_blank" rel="noopener" class="nav-link" style="color: #16a34a; font-weight: 600;" data-i18n="nav.whatsapp">হোয়াটসঅ্যাপ</a>
+        <a href="#about" class="nav-link">About Us</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#benefits" class="nav-link">Benefits</a>
+        <a href="#testimonials" class="nav-link">Testimonials</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!" target="_blank" rel="noopener" class="nav-link" style="color: #16a34a; font-weight: 600;">WhatsApp</a>
       </nav>
 
       <div class="nav-actions">
         <button id="navBookingBtn" class="btn-magnetic" style="cursor: pointer; border: none; font-family: inherit;">
-          <span data-i18n="nav.booking_btn">বুকিং দিন</span>
+          Booking Now
           <span class="btn-icon-circle">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </button>
-
-        <!-- Bengali / English Language Switcher Toggle -->
-        <div class="lang-switcher" id="langSwitcher" role="group" aria-label="Language selection">
-          <button class="lang-btn active" data-lang="bn">বাং</button>
-          <span class="lang-divider">/</span>
-          <button class="lang-btn" data-lang="en">EN</button>
-        </div>
 
         <button class="mobile-toggle" aria-label="Toggle navigation menu">
           <span class="hamburger-line"></span>
@@ -106,23 +96,23 @@
   </header>
 
   <!-- ========================================================================
-       HERO SECTION WITH 3D INTERACTIVE COFFEE SCENE
+       HERO SECTION
        ======================================================================== -->
   <section class="hero-section">
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-badge">
-          <span>☕</span> <span data-i18n="hero.badge">১০০% অর্গানিক ও প্রিমিয়াম রোস্ট</span>
+          <span>☕</span> 100% Organic & Ethically Sourced
         </div>
-        <h1 class="hero-title" data-i18n="hero.title">
-          কফির খাঁটি স্বাদ, <br /><span class="accent">নতুন এক যাত্রা</span>
+        <h1 class="hero-title">
+          Coffee Life's <br /><span class="accent">Beginning</span>
         </h1>
-        <p class="hero-desc" data-i18n="hero.desc">
-          সেরা জাতের অ্যারাবিকা কফি বিন ও স্পেশাল কোল্ড ব্রিউ নিয়ে তৈরি আমাদের ক্যাফে লাউঞ্জ। প্রতিটি কাপে খাঁটি স্বাদ ও পরিপূর্ণ তৃপ্তি।
+        <p class="hero-desc">
+          Cleveland-based specialty coffee house roasting premium hand-picked beans from the finest high-altitude micro-lots around the globe.
         </p>
         <div class="hero-cta-group">
           <a href="#products" class="btn-magnetic">
-            <span data-i18n="hero.btn_products">কফি মেনু দেখুন</span>
+            Our Products
             <span class="btn-icon-circle">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -132,23 +122,19 @@
             <span class="video-play-icon">
               <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M11 7L1 12.1962V1.80385L11 7Z" fill="currentColor"/></svg>
             </span>
-            <span data-i18n="hero.btn_video">ভিডিও দেখুন</span>
+            Watch Story
           </button>
         </div>
       </div>
 
-      <div class="hero-visual" id="heroVisualContainer">
-        <!-- 3D Interactive Coffee Pouring Kettle Scene -->
-        <div class="hero-3d-scene-container" id="hero3dContainer">
-          <canvas id="heroCoffeeCanvas" class="hero-coffee-canvas"></canvas>
-          <div class="hero-3d-shadow"></div>
-
-          <!-- Floating Rating Badge Overlaid on 3D Scene -->
+      <div class="hero-visual">
+        <div class="hero-splash-wrapper animate-float">
+          <img src="assets/images/hero-coffee-splash.avif" alt="Fresh artisan coffee splash" class="hero-splash-img" />
           <div class="hero-floating-card">
             <div class="hero-floating-badge">★</div>
             <div>
-              <div style="font-weight: 700; font-size: 0.95rem;" data-i18n="hero.rating_val">রেটিং ৪.৯ / ৫.০</div>
-              <div style="font-size: 0.8rem; color: var(--gray-600);" data-i18n="hero.rating_sub">১২,০০০+ সন্তুষ্ট কফি প্রেমী</div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Rated 4.9 / 5.0</div>
+              <div style="font-size: 0.8rem; color: var(--gray-600);">Over 12,000+ happy drinkers</div>
             </div>
           </div>
         </div>
@@ -162,11 +148,11 @@
   <section class="category-strip">
     <div class="container">
       <div class="category-tags">
-        <button class="cat-pill active" data-category="all" data-i18n="cat.all">সব কফি</button>
-        <button class="cat-pill" data-category="cold-brew" data-i18n="cat.cold">কোল্ড ব্রিউ</button>
-        <button class="cat-pill" data-category="dark-roast" data-i18n="cat.dark">ডার্ক রোস্ট</button>
-        <button class="cat-pill" data-category="organic" data-i18n="cat.organic">অর্গানিক বিন্স</button>
-        <button class="cat-pill" data-category="cold-brew" data-i18n="cat.bundles">স্পেশাল বান্ডেল</button>
+        <button class="cat-pill active" data-category="all">All Roasts</button>
+        <button class="cat-pill" data-category="cold-brew">Shop Bundles</button>
+        <button class="cat-pill" data-category="dark-roast">Dark Roast</button>
+        <button class="cat-pill" data-category="organic">Shop Organic</button>
+        <button class="cat-pill" data-category="cold-brew">Cold Brews</button>
       </div>
     </div>
   </section>
@@ -177,9 +163,9 @@
   <section class="products-section section-padding" id="products">
     <div class="container">
       <div class="section-header">
-        <span class="section-subtitle" data-i18n="products.subtitle">জনপ্রিয় ফ্লেভারসমূহ</span>
-        <h2 data-i18n="products.title">তাজা রোস্টেড কফি ও স্পেশাল আইটেম</h2>
-        <p class="text-muted" data-i18n="products.desc">প্রতিদিন ছোট ছোট ব্যাচে রোস্ট করা তাজা ও সুস্বাদু কফি। আপনার পছন্দের কফি নির্বাচন করে ক্যাফে লাউঞ্জে সরাসরি আসন বুকিং করুন।</p>
+        <span class="section-subtitle">Handcrafted with care</span>
+        <h2>Popular Flavors</h2>
+        <p class="text-muted">Freshly prepared with double-shot espresso, small-batch roasted beans and premium botanicals.</p>
       </div>
 
       <!-- Reactive container loaded by store.js -->
@@ -197,35 +183,35 @@
       <div class="about-image-stack">
         <img src="assets/images/about-coffee-craft.avif" alt="Coffee Roasting Process" class="about-main-img" />
         <div class="about-stat-card">
-          <div class="stat-number" data-i18n="about.stat_num">১২+</div>
-          <div class="stat-label" data-i18n="about.stat_label">বছরের প্রিমিয়াম রোস্টিং অভিজ্ঞতা</div>
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years of Artisan Roasting</div>
         </div>
       </div>
 
       <div class="about-content">
-        <span class="section-subtitle" data-i18n="about.subtitle">আমাদের ঐতিহ্য</span>
-        <h2 data-i18n="about.title">নিখুঁত ভালোবাসায় সেরা কফি প্রস্তুতি</h2>
-        <p data-i18n="about.p1">
-          একটি স্বপ্ন নিয়ে কফিকোর যাত্রা শুরু: বিশ্বের সেরা কফি ফার্ম থেকে সংগৃহীত সিঙ্গেল-অরিজিন কফি বিন প্রতিটি কাপে পরিবেশন করা।
+        <span class="section-subtitle">Our Heritage</span>
+        <h2>Crafted With Passion & Precision</h2>
+        <p>
+          Founded in Cleveland, Coffiko began with a singular mission: to bring single-origin purity and scientific precision to every cup.
         </p>
-        <p data-i18n="about.p2">
-          আমরা ইথিওপিয়া, কলম্বিয়া ও গুয়াতেমালার টেকসই চাষীদের সাথে সরাসরি কাজ করি, যাতে কৃষকের ন্যায্য মূল্য ও পরিবেশবান্ধব উৎপাদন নিশ্চিত থাকে।
+        <p>
+          We partner directly with sustainable coffee farmers across Ethiopia, Colombia, and Guatemala to ensure living wages and ecologically protected farming practices.
         </p>
 
         <div class="about-features-list">
           <div class="about-feature-item">
-            <span class="check-bullet">✓</span> <span data-i18n="about.feat_1">১০০% সরাসরি ফেয়ার-ট্রেড সার্টিফাইড সোর্সিং</span>
+            <span class="check-bullet">✓</span> 100% Direct Fair-Trade Certified Sourcing
           </div>
           <div class="about-feature-item">
-            <span class="check-bullet">✓</span> <span data-i18n="about.feat_2">সেরা সুবাস নিশ্চিত করতে স্মল-ব্যাচ ড্রাম রোস্টিং</span>
+            <span class="check-bullet">✓</span> Small-Batch Drum Roasting for Peak Aroma
           </div>
           <div class="about-feature-item">
-            <span class="check-bullet">✓</span> <span data-i18n="about.feat_3">অনবদ্য সতেজতা ধরে রাখতে নাইট্রোজেন-ফ্লাশড প্যাক</span>
+            <span class="check-bullet">✓</span> Nitrogen-Flushed Packaging for Unrivaled Freshness
           </div>
         </div>
 
         <a href="#products" class="btn-magnetic btn-secondary">
-          <span data-i18n="hero.btn_products">কফি মেনু দেখুন</span>
+          Explore Our Menu
           <span class="btn-icon-circle">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
@@ -261,50 +247,50 @@
   <section class="testimonials-section section-padding" id="testimonials">
     <div class="container">
       <div class="section-header">
-        <span class="section-subtitle" data-i18n="testimonials.subtitle">অতিথিদের ভালোবাসা</span>
-        <h2 data-i18n="testimonials.title">আমাদের নিয়মিত অতিথিরা যা বলেন</h2>
-        <p class="text-muted" data-i18n="testimonials.desc">জেনে নিন কেন কফি প্রেমী ও নিয়মিত অতিথিরা কফিকোকে তাদের পছন্দের সেরা স্থান বলেন।</p>
+        <span class="section-subtitle">Real feedback</span>
+        <h2>It's Our Customers Who Love Us</h2>
+        <p class="text-muted">Discover why coffee purists and casual morning commuters make Coffiko their daily ritual.</p>
       </div>
 
       <div class="testimonials-grid">
         <div class="testimonial-card hover-lift">
           <div class="star-rating">★★★★★</div>
-          <p class="testimonial-quote" data-i18n="testimonials.t1_quote">
-            "আইসড হ্যাজেলনাট ল্যাটে এই শহরের সেরা রিফ্রেশিং ড্রিংক। এক চুমুকেই কফি বিনের তাজা সুবাস এবং নিখুঁত স্বাদ স্পষ্ট বোঝা যায়।"
+          <p class="testimonial-quote">
+            "The Iced Hazelnut Latte and signature blends at Coffiko are hands-down the best in town. As someone who needs deep focus throughout the day, their small-batch roasted beans provide the smoothest aroma without any bitter aftertaste."
           </p>
           <div class="reviewer-profile">
             <img src="assets/images/shakil-ahmed.jpg" alt="Shakil Ahmed" class="reviewer-avatar" />
             <div>
               <div class="reviewer-name">Shakil Ahmed</div>
-              <div class="reviewer-role" data-i18n="testimonials.t1_role">আর্কিটেক্ট ও কফি অনুরাগী</div>
+              <div class="reviewer-role">Lead Software Engineer & Coffee Connoisseur</div>
             </div>
           </div>
         </div>
 
         <div class="testimonial-card hover-lift">
           <div class="star-rating">★★★★★</div>
-          <p class="testimonial-quote" data-i18n="testimonials.t2_quote">
-            "তাদের স্মল-ব্যাচ রোস্টেড কফি বিন আমার প্রতিদিনের সকালের পোর-ওভারের অভিজ্ঞতা সম্পূর্ণ বদলে দিয়েছে। দারুণ সুবাস ও স্মুথ ব্যালান্স।"
+          <p class="testimonial-quote">
+            "From the aesthetic packaging to the rich, balanced crema in every cup, Coffiko has completely elevated my morning pour-over routine. Balanced acidity, unrivaled freshness, and exceptional artisan roasting!"
           </p>
           <div class="reviewer-profile">
             <img src="assets/images/md-mahamud.jpg" alt="Md mahamud" class="reviewer-avatar" />
             <div>
               <div class="reviewer-name">Md mahamud</div>
-              <div class="reviewer-role" data-i18n="testimonials.t2_role">ক্রিয়েটিভ ডিরেক্টর</div>
+              <div class="reviewer-role">Senior UI/UX Designer & Cold Brew Lover</div>
             </div>
           </div>
         </div>
 
         <div class="testimonial-card hover-lift">
           <div class="star-rating">★★★★★</div>
-          <p class="testimonial-quote" data-i18n="testimonials.t3_quote">
-            "প্রতিটি ভিজিটে কফির স্বাদের ধারাবাহিকতা সত্যিই প্রশংসনীয়। কফিকো আমাদের টিমের প্রতিদিনের আড্ডার প্রিয় স্থান। আন্তরিক পরিবেশ এবং অসাধারণ স্বাদ!"
+          <p class="testimonial-quote">
+            "The consistency in taste and ethical fair-trade sourcing across every single order is unmatched. Coffiko is our team's daily go-to ritual. Warm ambiance, incredible baristas, and pure liquid gold!"
           </p>
           <div class="reviewer-profile">
             <img src="assets/images/md-emran.jpg" alt="Md Emran" class="reviewer-avatar" />
             <div>
               <div class="reviewer-name">Md Emran</div>
-              <div class="reviewer-role" data-i18n="testimonials.t3_role">সফটওয়্যার আর্কিটেক্ট ও টেক লিড</div>
+              <div class="reviewer-role">Business Strategist & Coffee Enthusiast</div>
             </div>
           </div>
         </div>
@@ -318,9 +304,9 @@
   <section class="gallery-section section-padding" id="gallery" style="background: var(--brand-white);">
     <div class="container">
       <div class="section-header">
-        <span class="section-subtitle" data-i18n="gallery.subtitle">ক্যাফে মোমেন্টস</span>
-        <h2 data-i18n="gallery.title">কফিকো লাউঞ্জের কিছু মুহূর্ত</h2>
-        <p class="text-muted" data-i18n="gallery.desc">আমাদের রোস্টিং অভিজ্ঞতা, কফি তৈরির মুহূর্ত এবং লাউঞ্জের মনোরম পরিবেশ দেখতে চোখ রাখুন @coffiko.cafe এ।</p>
+        <span class="section-subtitle">Visual Moments</span>
+        <h2>Our Gallery</h2>
+        <p class="text-muted">A glimpse into our roasting rituals, warm cafe atmosphere, and small-batch craftsmanship.</p>
       </div>
 
       <div class="gallery-grid">
@@ -354,13 +340,13 @@
   <section class="section-padding">
     <div class="container">
       <div class="cta-box">
-        <h2 data-i18n="newsletter.title">কফিকো ভিআইপি ক্লাবে যুক্ত হোন</h2>
-        <p data-i18n="newsletter.desc">নতুন স্পেশাল কফি রিলিজ, ব্রিউইং গাইড এবং প্রথম টেবিল বুকিংয়ে বিশেষ সুবিধার জন্য সাবস্ক্রাইব করুন।</p>
+        <h2>Join Our Community Of Coffee Lovers</h2>
+        <p>Subscribe for exclusive first-access to rare seasonal micro-lots, brewing recipes, and member-only cafe perks.</p>
         
         <form class="newsletter-form" id="newsletterForm">
-          <input type="email" class="newsletter-input" placeholder="আপনার ইমেইল এড্রেস দিন..." data-i18n-placeholder="newsletter.placeholder" required />
+          <input type="email" class="newsletter-input" placeholder="Enter your email address..." required />
           <button type="submit" class="btn-magnetic btn-secondary">
-            <span data-i18n="newsletter.btn">যুক্ত হোন</span>
+            Join Now
             <span class="btn-icon-circle">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -378,24 +364,24 @@
       <div class="footer-grid">
         <div class="footer-bio">
           <img src="assets/icons/coffiko-footer-logo.png" alt="Coffiko Logo" style="height: 44px; width: auto;" />
-          <p data-i18n="footer.brand_desc">
-            প্রিমিয়াম স্পেশালিটি কফি ও আর্টিসান মাইক্রো-রোস্টারি। সর্বোচ্চ মানের অ্যারাবিকা বিন ও মন জুড়ানো লাউঞ্জ পরিবেশ।
+          <p>
+            Cleveland-based artisan coffee roasters dedicated to small-batch purity, ethical sourcing, and handcrafted cafe drinks.
           </p>
         </div>
 
         <div class="footer-col">
-          <h4 data-i18n="nav.about">আমাদের সম্পর্কে</h4>
+          <h4>Explore</h4>
           <div class="footer-links-list">
-            <a href="#about" data-i18n="nav.about">আমাদের সম্পর্কে</a>
-            <a href="#products" data-i18n="nav.products">কফি মেনু</a>
-            <a href="#benefits" data-i18n="nav.benefits">বিশেষত্ব</a>
-            <a href="#testimonials" data-i18n="nav.testimonials">রিভিউ</a>
-            <a href="#gallery" data-i18n="nav.gallery">গ্যালারি</a>
+            <a href="#about">About Us</a>
+            <a href="#products">Products</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#gallery">Gallery</a>
           </div>
         </div>
 
         <div class="footer-col">
-          <h4 data-i18n="footer.col_direct">সরাসরি যোগাযোগ</h4>
+          <h4>Direct Connect</h4>
           <div class="footer-links-list">
             <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!" target="_blank" rel="noopener">
               WhatsApp: +880 1884-636312
@@ -413,27 +399,25 @@
         </div>
 
         <div class="footer-col">
-          <h4 data-i18n="footer.col_pages">পলিসি ও তথ্য</h4>
+          <h4>System & Pages</h4>
           <div class="footer-links-list">
-            <a href="#products" data-i18n="footer.coffee_menu">কফি মেনু</a>
-            <a href="style-guide.html" data-i18n="footer.style_guide">স্টাইল গাইড</a>
-            <a href="#policyModal" class="policy-link" data-policy="privacy" data-i18n="footer.privacy">প্রাইভেসি পলিসি</a>
-            <a href="#policyModal" class="policy-link" data-policy="terms" data-i18n="footer.terms">শর্তাবলী ও নিয়ম</a>
-            <a href="#policyModal" class="policy-link" data-policy="delivery" data-i18n="footer.delivery">বুকিং ও রিটার্ন পলিসি</a>
+            <a href="#products">Coffee Menu</a>
+            <a href="style-guide.html">Style Guide</a>
+            <a href="license.html">License</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="404.html">404 Page</a>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <div data-i18n="footer.rights">&copy; ২০২৬ কফিকো রোস্টারি ইনক. সর্বস্বত্ব সংরক্ষিত।</div>
+        <div>&copy; 2026 Coffiko Roastery Inc. All rights reserved.</div>
         <div class="footer-utility-links">
-          <a href="style-guide.html" data-i18n="footer.design_system">ডিজাইন সিস্টেম</a>
+          <a href="style-guide.html">Design System</a>
           <span>•</span>
-          <a href="#policyModal" class="policy-link" data-policy="privacy" data-i18n="footer.privacy">প্রাইভেসি পলিসি</a>
+          <a href="license.html">Licenses</a>
           <span>•</span>
-          <a href="#policyModal" class="policy-link" data-policy="terms" data-i18n="footer.terms">শর্তাবলী ও নিয়ম</a>
-          <span>•</span>
-          <a href="#policyModal" class="policy-link" data-policy="delivery" data-i18n="footer.delivery">বুকিং ও রিটার্ন পলিসি</a>
+          <a href="changelog.html">Changelog</a>
         </div>
       </div>
     </div>
@@ -594,21 +578,6 @@
   </div>
 
   <!-- ========================================================================
-       LEGAL & POLICY MODAL (PRIVACY, TERMS, BOOKING & RETURN)
-       ======================================================================== -->
-  <div class="policy-modal-overlay" id="policyModal">
-    <div class="policy-modal-card">
-      <div class="policy-modal-header">
-        <h3 id="policyModalTitle">Store Policy</h3>
-        <button class="policy-modal-close" id="closePolicyBtn" aria-label="Close Policy">&times;</button>
-      </div>
-      <div class="policy-modal-body" id="policyModalContent">
-        <!-- Dynamically injected policy content -->
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
        FLOATING WHATSAPP BUTTON (TABLE RESERVATION & INQUIRY)
        ======================================================================== -->
   <a href="https://wa.me/8801884636312?text=Hello%20Coffiko!%20I%20would%20like%20to%20reserve%20a%20table%20at%20your%20lounge." target="_blank" rel="noopener" class="whatsapp-floating-btn" aria-label="Reserve on WhatsApp">
@@ -616,18 +585,13 @@
     <span>WhatsApp</span>
   </a>
 
-  <!-- GSAP Animation Engine -->
-  <script src="js/vendor/gsap.min.js"></script>
-  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <!-- GSAP Animation CDNs with local fallbacks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   
-  <!-- Three.js 3D WebGL Engine -->
-  <script src="js/vendor/three.min.js"></script>
-
   <!-- Core Application Scripts -->
-  <script src="js/store.js?v=3.4"></script>
-  <script src="js/i18n.js?v=3.4"></script>
-  <script src="js/coffee-3d.js?v=3.4"></script>
-  <script src="js/animations.js?v=3.4"></script>
-  <script src="js/main.js?v=3.4"></script>
+  <script src="js/store.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
