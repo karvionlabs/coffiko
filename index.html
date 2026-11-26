@@ -7,7 +7,7 @@
   <meta name="description" content="Coffiko is a modern artisan cafe and specialty roastery offering ethically sourced small-batch coffee beans and cold brews." />
   
   <!-- Security Headers & Anti-Leak Policies -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://wa.me https://www.youtube-nocookie.com; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://wa.me https://www.youtube-nocookie.com; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   
@@ -129,7 +129,11 @@
 
       <div class="hero-visual">
         <div class="hero-splash-wrapper animate-float">
-          <img src="assets/images/hero-coffee-splash.avif" alt="Fresh artisan coffee splash" class="hero-splash-img" />
+          <video class="hero-splash-video" autoplay loop muted playsinline poster="assets/images/hero-coffee-splash.avif" aria-label="3D Artisan Coffee Animation">
+            <source src="assets/images/hero-3d-coffee.webm" type="video/webm" />
+            <source src="assets/images/hero-3d-coffee.mp4" type="video/mp4" />
+            <img src="assets/images/hero-coffee-splash.avif" alt="Fresh artisan coffee splash" class="hero-splash-img" />
+          </video>
           <div class="hero-floating-card">
             <div class="hero-floating-badge">★</div>
             <div>

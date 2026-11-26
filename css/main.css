@@ -340,6 +340,19 @@ h4, .h4 {
   max-width: 540px;
 }
 
+.hero-splash-video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px -12px rgba(42, 24, 18, 0.35);
+  display: block;
+  background-color: #0d0a08;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  pointer-events: none;
+}
+
 .hero-splash-img {
   width: 100%;
   height: auto;
@@ -348,7 +361,7 @@ h4, .h4 {
 
 .hero-floating-card {
   position: absolute;
-  bottom: 24px;
+  bottom: -32px;
   left: -20px;
   background: var(--brand-white);
   padding: 16px 20px;
