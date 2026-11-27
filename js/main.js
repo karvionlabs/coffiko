@@ -373,6 +373,10 @@ function initNewsletter() {
 
 // --- Global Toast Notification (XSS-Safe) ---
 let toastTimeout;
+function initToast() {
+  // Toast container is lazily initialized in showToast
+}
+
 function showToast(message) {
   let toast = document.querySelector('.toast-notice');
   if (!toast) {
